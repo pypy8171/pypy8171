@@ -2,18 +2,16 @@ import random
 
 from pico2d import *
 
-class Map1:
+class Map2:
 
     def __init__(self):
-        self.image= load_image('stage1.png')
-
+        self.image= load_image('stage2.png')
 
     def draw(self):
-        self.image.draw(835,300)
-    #835 에서 -110 까지 -> 835 ~ -910
+        self.image.draw(1100,300)
 
     def get_bb(self):
-      return 0,0,3200,70
+      return 0,0,3200,60
 
 
     def draw_bb(self):
