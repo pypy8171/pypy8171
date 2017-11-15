@@ -1,6 +1,7 @@
 import random
 
 from pico2d import *
+from pipe import Pipe1
 
 class Cat:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm
@@ -15,11 +16,13 @@ class Cat:
 
     image = None
 
-    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP = 0, 1, 2, 3,4
+    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP = 0, 1, 1, 1,1
 
     def __init__(self):
-        self.x, self.y = 0, 120
-        self.frame = random.randint(0, 3)
+        self.x, self.y = 100, 115
+        self.canvas_width = get_canvas_width()
+        self.canvas_height = get_canvas_height()
+        self.frame = 0
         self.life_time = 0.0
         self.total_frames = 0.0
         self.dir = 0
@@ -28,38 +31,50 @@ class Cat:
         if Cat.image == None:
             Cat.image = load_image('run_animation.png')
 
+    def set_map1(self,bg):
+        self.bg=bg
+
+
 
     def update(self, frame_time):
-        def clamp(minimum, x, maximum):
-            return max(minimum, min(x, maximum))
-        def clamp(minimum,y,maximum):
-            return max(minimum,min(y,maximum))
+        #def clamp(minimum, x, maximum):
+        #    return max(minimum, min(x, maximum))
+        #def clamp(minimum,y,maximum):
+        #    return max(minimum,min(y,maximum))
 
         self.life_time += frame_time
         distance = Cat.RUN_SPEED_PPS * frame_time
         self.total_frames += Cat.FRAMES_PER_ACTION * Cat.ACTION_PER_TIME * frame_time
-        self.frame = int(self.total_frames) % 3
+        self.frame = int(self.total_frames+1) % 3
         self.x += (self.dir * distance)
         self.y +=(self.up*distance)
 
-        self.x = clamp(0, self.x, 800)
-        self.y = clamp(120,self.y,300)
+        self.x = clamp(0, self.x, self.bg.w)
+        self.y = clamp(115,self.y,self.bg.h)
 
         if self.up ==2:
             if self.y>299:
                 self.up =-2
-                if self.y<121:
+                if self.y<123:
                     self.up = 0
 
-        if self.x>700:
-            self.y =-100
-
-
     def draw(self):
-        self.image.clip_draw(self.frame * 100, self.state * 100, 100, 100, self.x, self.y)
+        sx = self.x - self.bg.window_left
+        sy = self.y - self.bg.window_bottom
+        self.image.clip_draw(self.frame * 100, self.state * 100, 100, 100, sx, sy)
+
+    def stop(self):
+        if self.up ==-2:
+            self.up =0
+        #self.go()
+
+    def go(self):
+        if self.y>120:
+            self.y-=2
+
 
     def get_bb(self):
-        return self.x - 40, self.y - 30, self.x+40, self.y+40
+        return self.x - 40, self.y - 40, self.x+40, self.y+40
         pass
 
     def draw_bb(self):
