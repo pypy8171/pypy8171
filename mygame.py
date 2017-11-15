@@ -1,6 +1,10 @@
 import game_framework
-from pico2d import*
-import main_state
+import cProfile
 
+from pico2d import *
+import easy_stage
+import normal_stage
+import hard_stage
 
-game_framework.run(main_state)
+game_framework.run(easy_stage)
+
