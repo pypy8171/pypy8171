@@ -31,7 +31,11 @@ class Cat:
         if Cat.image == None:
             Cat.image = load_image('run_animation.png')
 
-    def set_map1(self,bg):
+    def set_map1(self, bg):
+        self.bg = bg
+    def set_map2(self,bg):
+        self.bg=bg
+    def set_map3(self,bg):
         self.bg=bg
 
 
