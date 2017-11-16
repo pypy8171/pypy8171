@@ -1,9 +1,10 @@
 import random
-
+import game_framework
+import normal_stage
 from pico2d import *
-from pipe import Pipe1
 
 class Cat:
+
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm
     RUN_SPEED_KMPH = 20.0                    # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
@@ -16,10 +17,10 @@ class Cat:
 
     image = None
 
-    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP = 0, 1, 1, 1,1
+    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP = 1, 1, 1, 1,1
 
     def __init__(self):
-        self.x, self.y = 100, 115
+        self.x, self.y = 100, 120
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.frame = 0
@@ -27,6 +28,8 @@ class Cat:
         self.total_frames = 0.0
         self.dir = 0
         self.up = 0
+        self.a=0
+        self.updir=0
         self.state = self.RIGHT_STAND
         if Cat.image == None:
             Cat.image = load_image('run_animation.png')
@@ -54,13 +57,21 @@ class Cat:
         self.y +=(self.up*distance)
 
         self.x = clamp(0, self.x, self.bg.w)
-        self.y = clamp(115,self.y,self.bg.h)
+        self.y = clamp(-120,self.y,self.bg.h)
 
-        if self.up ==2:
-            if self.y>299:
-                self.up =-2
-                if self.y<123:
-                    self.up = 0
+        self.a = self.total_frames
+        print("%d" % self.a)
+
+
+
+        if self.a%8>7:
+            self.up, self.updir=-2,1
+        elif self.updir==1 and self.y<130:
+            self.up, self.updir=0,0
+
+        if self.y<-30:
+            self.x ,self.y = 100,120
+
 
     def draw(self):
         sx = self.x - self.bg.window_left
@@ -70,15 +81,20 @@ class Cat:
     def stop(self):
         if self.up ==-2:
             self.up =0
+
+
+        #elif self.dir==1:
+         #   self.dir=0
+
+        #elif self.dir==-1:
+        #    self.dir=0
+
         #self.go()
 
-    def go(self):
-        if self.y>120:
-            self.y-=2
 
 
     def get_bb(self):
-        return self.x - 40, self.y - 40, self.x+40, self.y+40
+        return self.x - 40-self.bg.window_left, self.y - 40-self.bg.window_bottom, self.x+40-self.bg.window_left, self.y+40-self.bg.window_bottom
         pass
 
     def draw_bb(self):
@@ -105,6 +121,9 @@ class Cat:
             if self.state in(self.RIGHT_STAND,self.RIGHT_RUN,self.LEFT_STAND, self.LEFT_RUN):
                 self.state = self.JUMP
                 self.up = 2
+                self.total_frames=0
+
+
 
 
 
