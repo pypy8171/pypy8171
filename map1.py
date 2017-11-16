@@ -3,7 +3,6 @@ import random
 from pico2d import *
 
 class Map1:
-
     def __init__(self):
         self.image= load_image('stage1.png')
         self.speed=0
@@ -32,11 +31,12 @@ class Map1:
             self.h - self.canvas_height)
 
     def get_bb(self):
-      return 0,0,3200,70
-
-
+      #return 0-self.window_left,0-self.window_bottom,870-self.window_left,70-self.window_bottom
+      #return 985-self.window_left,0-self.window_bottom,1560-self.window_left,70-self.window_bottom
+        pass
     def draw_bb(self):
-        draw_rectangle(*self.get_bb())
-
+        #draw_rectangle(*self.get_bb())
+        #draw_rectangle(*self.get_bb())
+        pass
     def handle_event(self,event):
         pass
