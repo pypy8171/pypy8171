@@ -10,8 +10,7 @@ import hard_stage
 from cat import Cat # import Boy class from boy.py
 from map1 import Map1
 from pipe import Pipe1
-
-
+from land import Land
 
 
 
@@ -21,25 +20,51 @@ name = "easy_stage"
 cat = None
 map1 = None
 pipe = None
+land = None
+
+def create_land():
+    land = []
+    for i in range(0, 22):
+        ground = Land()
+        ground.x =20+40*i
+        ground.y = 35
+        land.append(ground)
+
+    for j in range(0,21):
+        ground = Land()
+        ground.x = 1000+ 40*j
+        ground.y = 35
+        land.append(ground)
+
+
+    return land
+
 
 
 def create_world():
-    global cat,map1, pipe
+    global cat,map1, pipe,land, wall
     cat = Cat()
     map1 = Map1()
     pipe = Pipe1()
+    land=Land()
+    wall = create_land()
 
+
+    for i in wall:
+        i.set_map1(map1)
     map1.set_center_object(cat)
     cat.set_map1(map1)
-
-
+    pipe.set_map1(map1)
+    land.set_map1(map1)
 
 def destroy_world():
-    global cat,map1,pipe
+    global cat,map1,pipe,land
+
 
     del(cat)
     del(map1)
     del(pipe)
+    del(land)
 
 
 
@@ -72,12 +97,15 @@ def handle_events(frame_time):
             game_framework.push_state(normal_stage)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_h:
             game_framework.push_state(hard_stage)
+        elif cat.x>1500:
+            game_framework.push_state(normal_stage)
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
             else:
                 cat.handle_event(event)
                 map1.handle_event(event)
+                land.handle_event(event)
 
 
 def collide(a, b):
@@ -96,12 +124,20 @@ def collide(a, b):
 def update(frame_time):
     cat.update(frame_time)
     map1.update(frame_time)
-    if collide(map1,cat):
+    land.update(frame_time)
+
+
+    if collide(land,cat):
         print("collision")
         cat.stop()
+
     if collide(pipe,cat):
         print("collision")
         cat.stop()
+
+    #if collide(land,cat):
+        #print("collision")
+        #cat.stop()
 
 
 
@@ -115,10 +151,16 @@ def draw(frame_time):
     pipe.draw()
     map1.draw()
     cat.draw()
+    land.draw()
+    for ground in wall:
+        ground.draw()
 
     pipe.draw_bb()
     map1.draw_bb()
     cat.draw_bb()
+    land.draw_bb()
+    for ground in wall:
+        ground.draw_bb()
     pass
 
     update_canvas()

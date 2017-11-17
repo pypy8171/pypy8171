@@ -31,7 +31,7 @@ class Map1:
             self.h - self.canvas_height)
 
     def get_bb(self):
-      #return 0-self.window_left,0-self.window_bottom,870-self.window_left,70-self.window_bottom
+        #return 0-self.window_left,0-self.window_bottom,870-self.window_left,70-self.window_bottom
       #return 985-self.window_left,0-self.window_bottom,1560-self.window_left,70-self.window_bottom
         pass
     def draw_bb(self):
