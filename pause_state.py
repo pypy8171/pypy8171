@@ -1,11 +1,13 @@
 import random
 import json
 import os
+import game_framework
+import easy_stage
 
 from pico2d import *
 
 import game_framework
-import main_state
+import easy_stage
 
 
 name = "PauseState"
@@ -34,10 +36,10 @@ class Pause:
 
 class Title:
     def __init__(self):
-        self.image = load_image('title.png')
+        self.image = load_image('easy_mode.png')
 
     def draw(self):
-        self.image.draw(400, 300)
+        self.image.draw(1550, 300)
 
 
 
@@ -85,7 +87,8 @@ def draw():
     clear_canvas()
     title.draw()
     #grass.draw 대신 main_state.draw_main_scene
-    main_state.cat.image.clip_draw(main_state.cat.frame * 100, 0, 100, 100, main_state.cat.x, main_state.cat.y)
+    easy_stage.map1.image.draw(1550+easy_stage.map1.x,easy_stage.map1.y)
+    easy_stage.cat.image.clip_draw(easy_stage.cat.frame * 100, 0, 100, 100, easy_stage.cat.x, easy_stage.cat.y)
     pause.draw()
     update_canvas()
 

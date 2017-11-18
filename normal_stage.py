@@ -9,10 +9,10 @@ import hard_stage
 
 from cat import Cat # import Boy class from boy.py
 from map2 import Map2
-from pipe import Pipe1
+from pipe import Pipe2
 from land2 import Land2
-
-
+from normal_obstacle import Obstacle2
+from fake_portal import Flag
 
 
 
@@ -23,12 +23,69 @@ cat = None
 map2 = None
 pipe = None
 
+def create_obstacle():
+    obstacle = []
+    for i in range(0,1):
+        ob=Obstacle2()
+        ob.x = 625+40*i
+        ob.y = 87
+        obstacle.append(ob)
 
+    for i in range(0,1):
+        ob=Obstacle2()
+        ob.x = 1359
+        ob.y = 87
+        obstacle.append(ob)
+
+    for j in range(0,2):
+        ob=Obstacle2()
+        ob.x = 700
+        ob.y = 87+ 40*j
+        obstacle.append(ob)
+
+    for j in range(0,2):
+        ob=Obstacle2()
+        ob.x = 1271
+        ob.y = 87+ 40*j
+        obstacle.append(ob)
+
+    for k in range(0,3):
+        ob=Obstacle2()
+        ob.x = 787
+        ob.y = 87+43*k
+        obstacle.append(ob)
+
+    for k in range(0,3):
+        ob=Obstacle2()
+        ob.x = 1183
+        ob.y = 87+43*k
+        obstacle.append(ob)
+
+    for l in range(0,4):
+        ob=Obstacle2()
+        ob.x = 877
+        ob.y = 87+43*l
+        obstacle.append(ob)
+
+    for l in range(0,4):
+        ob=Obstacle2()
+        ob.x = 1097
+        ob.y = 87+43*l
+        obstacle.append(ob)
+
+
+    return obstacle
 def create_land():
     land = []
-    for i in range(0, 38):
+    for i in range(0, 22):
         ground = Land2()
         ground.x =20+40*i
+        ground.y = 35
+        land.append(ground)
+
+    for k in range(0, 11):
+        ground = Land2()
+        ground.x =1100+40*k
         ground.y = 35
         land.append(ground)
 
@@ -53,28 +110,37 @@ def create_land():
     return land
 
 def create_world():
-    global cat,map2, pipe, land,wall
+    global cat,map2, pipe, land,wall,obstacle, flag
+    flag = Flag()
+    obstacle=create_obstacle()
     cat = Cat()
     map2 = Map2()
-    pipe = Pipe1()
+    pipe = Pipe2()
     land = Land2()
     wall = create_land()
 
     for i in wall:
         i.set_map2(map2)
+    for i in obstacle:
+        i.set_map2(map2)
     map2.set_center_object(cat)
     cat.set_map2(map2)
     pipe.set_map2(map2)
     land.set_map2(map2)
+    flag.set_map2(map2)
+
 
 
 def destroy_world():
-    global cat,map2,pipe,land
+    global cat,map2,pipe,land,obstacle,flag
+
 
     del(cat)
     del(map2)
     del(pipe)
     del(land)
+    del(obstacle)
+    del(flag)
 
 
 
@@ -105,8 +171,8 @@ def handle_events(frame_time):
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_h:
             game_framework.push_state(hard_stage)
-        elif cat.x>2000:
-            game_framework.push_state(hard_stage)
+        elif cat.x>2100:
+            game_framework.change_state(hard_stage)
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
@@ -127,17 +193,27 @@ def collide(a, b):
     return True
 
 
-
+#a=None
 def update(frame_time):
+    #global a
     cat.update(frame_time)
     map2.update(frame_time)
 
     for ground in wall:
         if collide(ground, cat):
             cat.stop()
+
+    for ob in obstacle:
+        if collide(ob,cat):
+            cat.stop()
+
     if collide(pipe,cat):
         print("collision")
         cat.stop()
+        #a=1
+
+    if collide(flag, cat):
+        cat.start()
 
 
 
@@ -152,14 +228,21 @@ def draw(frame_time):
     map2.draw()
     cat.draw()
     land.draw()
+    flag.draw()
     for ground in wall:
         ground.draw()
+    for ob in obstacle:
+        ob.draw()
 
     pipe.draw_bb()
     map2.draw_bb()
     cat.draw_bb()
+    flag.draw_bb()
     for ground in wall:
         ground.draw_bb()
+    for ob in obstacle:
+        ob.draw()
+
     pass
 
     update_canvas()

@@ -1,9 +1,50 @@
+    def __init__(self):
+        self.image= load_image('easy_mode.png')
+
+    def draw(self):
+        self.image.draw(1600,300)
+
+
+
+class Pipe2:
+    image = None;
+    def __init__(self):
+        self.x, self.y = 400,300
+        if Pipe2.image ==None:
+            Pipe2.image = load_image('pause1.png')
+    def update(self,frame_time):
+        pass
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
+
+    def get_bb(self):
+        return self.x-50,self.y-50,self.x+50,self.y+50
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+
+
+
+    pipe_data_file = open('pipe_data.txt', 'r')
+    pipe_data = json.load(pipe_data_file)
+    pipe_data_file.close()
+
+    pipe = []
+    for name in pipe_data:
+        player = Pipe1()
+        player.name = name
+        player.x = pipe_data[name]['x']
+        player.y = pipe_data[name]['y']
+        pipe.append(player)
+    return pipe
+
+
 from pico2d import *
 
 import game_framework
 import pause_state
 
-import title_state
 import normal_stage
 import hard_stage
 
@@ -11,8 +52,9 @@ import hard_stage
 from cat import Cat # import Boy class from boy.py
 from map1 import Map1
 from pipe import Pipe1
-from land import Land
-from fake_portal import Door
+
+
+
 
 
 
@@ -21,52 +63,22 @@ name = "easy_stage"
 cat = None
 map1 = None
 pipe = None
-land = None
-
-def create_land():
-    land = []
-    for i in range(0, 22):
-        ground = Land()
-        ground.x =20+40*i
-        ground.y = 35
-        land.append(ground)
-
-    for j in range(0,21):
-        ground = Land()
-        ground.x = 1000+ 40*j
-        ground.y = 40
-        land.append(ground)
-
-
-    return land
-
 
 
 def create_world():
-    global cat,map1, pipe,land, wall,door
-    door=Door()
+    global cat,map1, pipe
     cat = Cat()
     map1 = Map1()
     pipe = Pipe1()
-    land=Land()
-    wall = create_land()
 
 
-    for i in wall:
-        i.set_map1(map1)
-    map1.set_center_object(cat)
-    cat.set_map1(map1)
-    pipe.set_map1(map1)
-    land.set_map1(map1)
-    door.set_map1(map1)
+
 def destroy_world():
-    global cat,map1,pipe,land,door
+    global cat,map1,pipe
 
-    del(door)
     del(cat)
     del(map1)
     del(pipe)
-    del(land)
 
 
 
@@ -99,15 +111,11 @@ def handle_events(frame_time):
             game_framework.push_state(normal_stage)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_h:
             game_framework.push_state(hard_stage)
-        elif cat.x>1700:
-            game_framework.change_state(normal_stage)
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
             else:
                 cat.handle_event(event)
-                map1.handle_event(event)
-                #land.handle_event(event)
 
 
 def collide(a, b):
@@ -122,31 +130,16 @@ def collide(a, b):
     return True
 
 
+
 def update(frame_time):
-
+    global move
     cat.update(frame_time)
-    map1.update(frame_time)
-    land.update(frame_time)
-
-
-    for ground in wall:
-        if collide(ground,cat):
-            cat.stop()
-
-
-
+    if collide(map1,cat):
+        print("collision")
+        cat.stop()
     if collide(pipe,cat):
         print("collision")
         cat.stop()
-
-
-    if collide(door,cat):
-        print("collision")
-        cat.start()
-
-    #if collide(land,cat):
-        #print("collision")
-        #cat.stop()
 
 
 
@@ -157,28 +150,14 @@ def update(frame_time):
 def draw(frame_time):
     clear_canvas()
 
-
     pipe.draw()
     map1.draw()
     cat.draw()
-    land.draw()
-    door.draw()
-    for ground in wall:
-        ground.draw()
 
     pipe.draw_bb()
     map1.draw_bb()
     cat.draw_bb()
-    land.draw_bb()
-    door.draw_bb()
-    for ground in wall:
-        ground.draw_bb()
     pass
 
     update_canvas()
-
-
-
-
-
 
