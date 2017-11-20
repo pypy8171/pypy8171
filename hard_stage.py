@@ -161,7 +161,7 @@ def handle_events(frame_time):
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
-        elif cat.x>2400:
+        elif cat.x>2650:
             game_framework.change_state(boss_stage)
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):

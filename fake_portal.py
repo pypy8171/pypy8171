@@ -40,9 +40,9 @@ class Flag:
     image = None;
 
     def __init__(self):
-        self.x, self.y = 2033,90
+        self.x, self.y = 2040,110
         if Flag.image ==None:
-            Flag.image = load_image('easy_portal.png')
+            Flag.image = load_image('normal_portal.png')
 
     def set_map1(self, bg):
         self.bg = bg
@@ -60,7 +60,7 @@ class Flag:
         self.image.draw(self.x-self.bg.window_left,self.y-self.bg.window_bottom)
 
     def get_bb(self):
-        return self.x - 20 - self.bg.window_left, self.y-20-self.bg.window_bottom,self.x-self.bg.window_left,self.y+50-self.bg.window_bottom
+        return self.x - 20 - self.bg.window_left, self.y-40-self.bg.window_bottom,self.x-self.bg.window_left,self.y+40-self.bg.window_bottom
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
@@ -71,9 +71,9 @@ class Fruit:
     image = None;
 
     def __init__(self):
-        self.x, self.y = 2563,105
+        self.x, self.y = 2563,95
         if Fruit.image ==None:
-            Fruit.image = load_image('easy_portal.png')
+            Fruit.image = load_image('hard_portal.png')
 
     def set_map1(self, bg):
         self.bg = bg

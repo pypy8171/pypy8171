@@ -1,3 +1,4 @@
+
 import random
 import game_framework
 import normal_stage
@@ -34,13 +35,15 @@ class Pistol:
         self.updir=0
         self.state = self.LOAD
         if Pistol.image == None:
-            Pistol.image = load_image('run_animation.png')
+            Pistol.image = load_image('pistol.png')
 
     def set_map1(self, bg):
         self.bg = bg
     def set_map2(self,bg):
         self.bg=bg
     def set_map3(self,bg):
+        self.bg=bg
+    def set_map4(self,bg):
         self.bg=bg
 
 
@@ -65,6 +68,9 @@ class Pistol:
         self.a = self.total_frame
         print("%d" % self.a)
 
+        if self.x>800:
+            self.x = Cat
+
 
 
         if self.a%8>7:
@@ -79,7 +85,7 @@ class Pistol:
     def draw(self):
         sx = self.x - self.bg.window_left
         sy = self.y - self.bg.window_bottom
-        self.image.clip_draw(self.frame * 100, self.state * 100, 100, 100, sx, sy)
+        self.image.draw(sx, sy)
 
     def stop(self):
         self.up=0
@@ -93,6 +99,9 @@ class Pistol:
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
+
+    def set_cat(self, bg):
+        self.bg = bg
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
@@ -125,15 +134,11 @@ class Pistol:
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_a):
             if self.state in (self.LOAD, self.FIRE,self.RIGHT_STAND,self.RIGHT_RUN,self.LEFT_STAND, self.LEFT_RUN,self.JUMP):
                 self.state = self.FIRE
+                self.up=0
                 self.dir = 5
 
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_a):
+            #self.dir=-5
+            #if self.x<200:
+            #    self.dir=0
             pass
-
-
-
-
-
-
-
-

@@ -11,7 +11,7 @@ class Dieblock:
     def __init__(self):
         self.x, self.y = 0,30
         if Dieblock.image ==None:
-            Dieblock.image = load_image('easy_portal.png')
+            Dieblock.image = load_image('die_block2.png')
 
     def set_map1(self, bg):
         self.bg = bg

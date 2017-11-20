@@ -5,7 +5,7 @@ import pause_state
 
 import easy_stage
 import hard_stage
-
+import boss_stage
 
 from cat import Cat # import Boy class from boy.py
 from map2 import Map2
@@ -161,14 +161,12 @@ def destroy_world():
 
 
 def enter():
-    open_canvas()
     game_framework.reset_time()
     create_world()
 
 
 def exit():
     destroy_world()
-    close_canvas()
 
 
 def pause():
@@ -187,7 +185,8 @@ def handle_events(frame_time):
         elif event.type == SDL_KEYDOWN and event.key == SDLK_h:
             game_framework.push_state(hard_stage)
         elif cat.x>2100:
-            game_framework.change_state(hard_stage)
+            #game_framework.change_state(hard_stage)
+            game_framework.change_state(boss_stage)
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
@@ -224,6 +223,11 @@ def update(frame_time):
             #print("clollision")
             Dieblock.image = load_image("hard_tile.png")
             cat.block_stop()
+
+    # 죽었을때 다시 감추는거
+    if cat.y>550:
+        Dieblock.image = load_image("die_block2.png")
+
 
 
 
