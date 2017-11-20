@@ -13,18 +13,29 @@ from pipe import Pipe2
 from land2 import Land2
 from normal_obstacle import Obstacle2
 from fake_portal import Flag
-
-
+from normal_dieblock import Dieblock
 
 
 name = "normal_stage"
 
-cat = None
+cat =None
 map2 = None
 pipe = None
 
+def create_dieblock():
+    blocks=[]
+    for i in range(0,2):
+        block=Dieblock()
+        block.x=950+40*i
+        block.y = 600
+        blocks.append(block)
+
+    return blocks
+
+
 def create_obstacle():
     obstacle = []
+
     for i in range(0,1):
         ob=Obstacle2()
         ob.x = 625+40*i
@@ -110,7 +121,8 @@ def create_land():
     return land
 
 def create_world():
-    global cat,map2, pipe, land,wall,obstacle, flag
+    global cat,map2, pipe, land,wall,obstacle, flag,blocks
+    blocks = create_dieblock()
     flag = Flag()
     obstacle=create_obstacle()
     cat = Cat()
@@ -123,6 +135,8 @@ def create_world():
         i.set_map2(map2)
     for i in obstacle:
         i.set_map2(map2)
+    for i in blocks:
+        i.set_map2(map2)
     map2.set_center_object(cat)
     cat.set_map2(map2)
     pipe.set_map2(map2)
@@ -132,7 +146,7 @@ def create_world():
 
 
 def destroy_world():
-    global cat,map2,pipe,land,obstacle,flag
+    global cat,map2,pipe,land,obstacle,flag,blocks
 
 
     del(cat)
@@ -141,6 +155,7 @@ def destroy_world():
     del(land)
     del(obstacle)
     del(flag)
+    del(blocks)
 
 
 
@@ -201,15 +216,25 @@ def update(frame_time):
 
     for ground in wall:
         if collide(ground, cat):
+            #print("collision")
             cat.stop()
+
+    for block in blocks:
+        if collide(block,cat):
+            #print("clollision")
+            Dieblock.image = load_image("hard_tile.png")
+            cat.block_stop()
+
+
 
     for ob in obstacle:
         if collide(ob,cat):
-            cat.stop()
+            print("collision")
+            cat.normal_stop()
 
     if collide(pipe,cat):
-        print("collision")
-        cat.stop()
+        #print("collision")
+        cat.stoppipe2()
         #a=1
 
     if collide(flag, cat):
@@ -229,6 +254,8 @@ def draw(frame_time):
     cat.draw()
     land.draw()
     flag.draw()
+    for block in blocks:
+        block.draw()
     for ground in wall:
         ground.draw()
     for ob in obstacle:
@@ -241,7 +268,9 @@ def draw(frame_time):
     for ground in wall:
         ground.draw_bb()
     for ob in obstacle:
-        ob.draw()
+        ob.draw_bb()
+    for block in blocks:
+        block.draw_bb()
 
     pass
 

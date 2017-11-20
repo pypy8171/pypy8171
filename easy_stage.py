@@ -13,6 +13,7 @@ from map1 import Map1
 from pipe import Pipe1
 from land import Land
 from fake_portal import Door
+from pistol import Pistol
 
 
 
@@ -22,6 +23,8 @@ cat = None
 map1 = None
 pipe = None
 land = None
+pistol=None
+door=None
 
 def create_land():
     land = []
@@ -43,13 +46,14 @@ def create_land():
 
 
 def create_world():
-    global cat,map1, pipe,land, wall,door
+    global cat,map1, pipe,land, wall,door, pistol
     door=Door()
     cat = Cat()
     map1 = Map1()
     pipe = Pipe1()
     land=Land()
     wall = create_land()
+    pistol = Pistol()
 
 
     for i in wall:
@@ -59,27 +63,31 @@ def create_world():
     pipe.set_map1(map1)
     land.set_map1(map1)
     door.set_map1(map1)
+    pistol.set_map1(map1)
+
 def destroy_world():
-    global cat,map1,pipe,land,door
+    global cat,map1,pipe,land,door,pistol
 
     del(door)
     del(cat)
     del(map1)
     del(pipe)
     del(land)
+    del(pistol)
+
 
 
 
 
 def enter():
-    open_canvas()
+
     game_framework.reset_time()
     create_world()
 
 
 def exit():
     destroy_world()
-    close_canvas()
+
 
 
 def pause():
@@ -107,6 +115,7 @@ def handle_events(frame_time):
             else:
                 cat.handle_event(event)
                 map1.handle_event(event)
+                pistol.handle_event(event)
                 #land.handle_event(event)
 
 
@@ -127,18 +136,18 @@ def update(frame_time):
     cat.update(frame_time)
     map1.update(frame_time)
     land.update(frame_time)
+    pistol.update(frame_time)
 
 
     for ground in wall:
         if collide(ground,cat):
             cat.stop()
-
-
+        elif collide(ground,pistol):
+            pistol.stop()
 
     if collide(pipe,cat):
         print("collision")
-        cat.stop()
-
+        cat.stoppipe()
 
     if collide(door,cat):
         print("collision")
@@ -149,15 +158,13 @@ def update(frame_time):
         #cat.stop()
 
 
-
-
     #if collide(map1,cat):
        # print("collision")
 
 def draw(frame_time):
     clear_canvas()
 
-
+    pistol.draw()
     pipe.draw()
     map1.draw()
     cat.draw()
@@ -166,6 +173,7 @@ def draw(frame_time):
     for ground in wall:
         ground.draw()
 
+    pistol.draw_bb()
     pipe.draw_bb()
     map1.draw_bb()
     cat.draw_bb()

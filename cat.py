@@ -16,9 +16,9 @@ class Cat:
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 8
 
-    image = None
+    image=None
 
-    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP = 1, 1, 1, 1,1
+    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP= 1, 1, 1, 1,1
 
     def __init__(self):
         self.x, self.y = 100, 600
@@ -41,6 +41,8 @@ class Cat:
     def set_map2(self,bg):
         self.bg=bg
     def set_map3(self,bg):
+        self.bg=bg
+    def set_map4(self,bg):
         self.bg=bg
 
 
@@ -81,15 +83,51 @@ class Cat:
         sy = self.y - self.bg.window_bottom
         self.image.clip_draw(self.frame * 100, self.state * 100, 100, 100, sx, sy)
 
-    def stop(self):
+    def stoppipe(self):
         if self.up ==-2:
             self.up =0
 
+
         if self.x>430 and self.x<570 and self.y>65 and self.y<233:
             if self.dir==1:
-                self.dir=-1
+                self.x-=2
             elif self.dir==-1:
-                self.dir=1
+                self.x+=2
+
+    def stoppipe2(self):
+        if self.up ==-2:
+            self.up =0
+        if self.x>1670 and self.x<1830 and self.y>65 and self.y<180:
+            if self.dir==1:
+                self.x-=2
+            elif self.dir==-1:
+                self.x+=2
+
+    def stop(self):
+        if self.up==-2:
+            self.up=0
+
+
+    def normal_stop(self):
+        if self.up==-2:
+            self.up=0
+        if self.dir==1 and self.up==0:
+            self.x-=4
+        if self.dir==-1 and self.up==0:
+            self.x+=4
+
+    def block_stop(self):
+        if self.dir==1 and self.up==2:
+            self.up=-20
+        if self.dir==-1 and self.up==2:
+            self.up=-20
+
+
+
+
+
+        pass
+
 
 
         #if normal_stage.a==1:
@@ -110,6 +148,7 @@ class Cat:
     def start(self):
         self.x = 100
         self.y = 600
+
 
 
 
@@ -143,9 +182,10 @@ class Cat:
                 normal_stage.a=0
         elif (event.type, event.key)==(SDL_KEYDOWN,SDLK_UP):
             if self.state in(self.RIGHT_STAND,self.RIGHT_RUN,self.LEFT_STAND, self.LEFT_RUN):
-                self.state = self.JUMP
-                self.up = 2
-                self.total_frame=0
+                if self.up<1 and self.up>-1:
+                    self.state = self.JUMP
+                    self.up = 2
+                    self.total_frame=0
 
 
 

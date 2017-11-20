@@ -56,9 +56,7 @@ def create_world():
     boss.set_map4(map4)
 
 def destroy_world():
-    global cat,map4,land,pistol,boss
-
-    del(boss)
+    global cat,map4,land,pistol
     del(cat)
     del(map4)
     del(land)
@@ -69,14 +67,12 @@ def destroy_world():
 
 
 def enter():
-    open_canvas()
     game_framework.reset_time()
     create_world()
 
 
 def exit():
     destroy_world()
-    close_canvas()
 
 
 def pause():
@@ -92,6 +88,8 @@ def handle_events(frame_time):
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
+        elif boss.x>800:
+            game_framework.push_state(title_state)
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
@@ -122,6 +120,10 @@ def update(frame_time):
     pistol.update(frame_time)
     boss.update(frame_time)
 
+    if collide(boss,pistol):
+        print("collistion")
+        pistol.stop()
+        boss.remove()
     for ground in wall:
         if collide(ground,boss):
             boss.stop()
@@ -135,13 +137,14 @@ def update(frame_time):
 def draw(frame_time):
     clear_canvas()
 
-    boss.draw()
+
     pistol.draw()
     map4.draw()
     cat.draw()
     land.draw()
     for ground in wall:
         ground.draw()
+    boss.draw()
 
     pistol.draw_bb()
     map4.draw_bb()

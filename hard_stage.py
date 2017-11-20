@@ -5,17 +5,12 @@ import pause_state
 
 import easy_stage
 import normal_stage
-
+import boss_stage
 
 from cat import Cat # import Boy class from boy.py
 from map3 import Map3
 from fake_portal import Fruit
 from land3 import Land3
-
-
-
-
-
 
 
 name = "hard_stage"
@@ -143,14 +138,14 @@ def destroy_world():
 
 
 def enter():
-    open_canvas()
+
     game_framework.reset_time()
     create_world()
 
 
 def exit():
     destroy_world()
-    close_canvas()
+
 
 
 def pause():
@@ -166,6 +161,8 @@ def handle_events(frame_time):
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
+        elif cat.x>2400:
+            game_framework.change_state(boss_stage)
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
@@ -194,8 +191,6 @@ def update(frame_time):
     for ground in wall:
         if collide(ground, cat):
             cat.stop()
-
-
 
     if collide(fruit,cat):
         cat.start()

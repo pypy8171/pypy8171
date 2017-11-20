@@ -1,6 +1,6 @@
 import random
 import game_framework
-import normal_stage
+
 from pico2d import *
 
 
@@ -34,7 +34,7 @@ class Boss:
         self.updir=0
 
         if Boss.image == None:
-            Boss.image = load_image('ground2.png')
+            Boss.image = load_image('boss_animation.png')
 
     def set_map1(self, bg):
         self.bg = bg
@@ -55,14 +55,14 @@ class Boss:
 
         self.life_time += frame_time
         distance = Boss.RUN_SPEED_PPS * frame_time
-        self.frame = int(self.total_frames+1) % 3
+        self.frame = int(self.total_frames+1) % 4
         self.total_frames += Boss.FRAMES_PER_ACTION * Boss.ACTION_PER_TIME * frame_time
         self.total_frame += Boss.FRAMES_PER_ACTION * Boss.ACTION_PER_TIME*frame_time
 
         self.x += (self.dir * distance)
         self.y +=(self.up*distance)
 
-        self.x = clamp(0, self.x, self.bg.w)
+        self.x = clamp(0, self.x, self.bg.w+200)
         self.y = clamp(-120,self.y,self.bg.h)
 
         self.a = self.total_frame
@@ -75,15 +75,15 @@ class Boss:
 #        elif self.updir==1 and self.y<115:
 #            self.up, self.updir=0,0
 
-        if self.y<-30:
-            self.x ,self.y = 100,600
 
 
     def draw(self):
         sx = self.x - self.bg.window_left
         sy = self.y - self.bg.window_bottom
-        self.image.draw( sx, sy)
+        self.image.clip_draw(self.frame*95,20,85,90, sx, sy)
 
+    def remove(self):
+        self.dir = 5
     def stoppipe(self):
         if self.up ==-2:
             self.up =0
@@ -135,22 +135,22 @@ class Boss:
             if self.state in (self.RIGHT_STAND, self.LEFT_STAND, self.RIGHT_RUN,self.JUMP):
                 self.state = self.LEFT_RUN
                 self.dir = -1
-                normal_stage.a=0
+
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RIGHT):
             if self.state in (self.RIGHT_STAND, self.LEFT_STAND, self.LEFT_RUN,self.JUMP):
                 self.state = self.RIGHT_RUN
                 self.dir = 1
-                normal_stage.a=0
+
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_LEFT):
             if self.state in (self.LEFT_RUN,self.JUMP):
                 self.state = self.LEFT_STAND
                 self.dir = 0
-                normal_stage.a=0
+
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_RIGHT):
             if self.state in (self.RIGHT_RUN,self.JUMP):
                 self.state = self.RIGHT_STAND
                 self.dir = 0
-                normal_stage.a=0
+
         elif (event.type, event.key)==(SDL_KEYDOWN,SDLK_UP):
             if self.state in(self.RIGHT_STAND,self.RIGHT_RUN,self.LEFT_STAND, self.LEFT_RUN):
                 if self.up<1 and self.up>-1:
