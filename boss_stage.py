@@ -41,10 +41,11 @@ def create_world():
 
     boss = Boss()
     cat = Cat()
+    pistol=Pistol()
     map4=Map4()
     land=Land4()
     wall = create_land()
-    pistol = Pistol()
+
 
 
     for i in wall:
@@ -57,6 +58,7 @@ def create_world():
 
 def destroy_world():
     global cat,map4,land,pistol
+
     del(cat)
     del(map4)
     del(land)
@@ -120,6 +122,9 @@ def update(frame_time):
     pistol.update(frame_time)
     boss.update(frame_time)
 
+    if collide(cat,pistol):
+        pistol.stop()
+
     if collide(boss,pistol):
         print("collistion")
         pistol.stop()
@@ -138,16 +143,18 @@ def draw(frame_time):
     clear_canvas()
 
 
-    pistol.draw()
+
     map4.draw()
+    pistol.draw()
     cat.draw()
     land.draw()
     for ground in wall:
         ground.draw()
     boss.draw()
 
-    pistol.draw_bb()
+
     map4.draw_bb()
+    pistol.draw_bb()
     cat.draw_bb()
     land.draw_bb()
     boss.draw_bb()
