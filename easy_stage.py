@@ -26,6 +26,8 @@ land = None
 pistol=None
 door=None
 
+
+
 def create_land():
     land = []
     for i in range(0, 22):
@@ -80,7 +82,6 @@ def destroy_world():
 
 
 def enter():
-
     game_framework.reset_time()
     create_world()
 
@@ -164,10 +165,10 @@ def update(frame_time):
 def draw(frame_time):
     clear_canvas()
 
-    pistol.draw()
     pipe.draw()
     map1.draw()
     cat.draw()
+    pistol.draw()
     land.draw()
     door.draw()
     for ground in wall:

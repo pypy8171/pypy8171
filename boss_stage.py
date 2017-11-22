@@ -23,6 +23,7 @@ pipe = None
 land = None
 pistol=None
 
+
 def create_land():
     land = []
     for i in range(0, 22):
@@ -38,6 +39,7 @@ def create_land():
 
 def create_world():
     global cat,map4,land, wall,door, pistol,boss
+
 
     boss = Boss()
     cat = Cat()
@@ -58,6 +60,7 @@ def create_world():
 
 def destroy_world():
     global cat,map4,land,pistol
+
 
     del(cat)
     del(map4)
@@ -137,6 +140,9 @@ def update(frame_time):
             cat.stop()
         elif collide(ground,pistol):
             pistol.stop()
+
+    if collide(boss,cat):
+        cat.die()
 
 
 def draw(frame_time):

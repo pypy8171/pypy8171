@@ -13,21 +13,27 @@ from fake_portal import Fruit
 from land3 import Land3
 from normal_dieblock import Dieblock
 from help_block import Helpblock
-from thorn import Thorn()
+from thorn import Thorn2
 
 name = "hard_stage"
 
 cat = None
 map3 = None
 
-def create_diethorn():
-    thorns=[]
+def create_diethorn2():
+    thorns2=[]
+    for i0 in range(0,1):
+        thorn2 = Thorn2()
+        thorn2.x = 530+40*i0
+        thorn2.y = 125
+        thorns2.append(thorn2)
+
     for i0 in range(0,2):
-        thorn = Thorn()
-        thorn.x = 100+40*i0
-        thorn.y = 200
-        thorns.append(thorn)
-    return thorns
+        thorn2 = Thorn2()
+        thorn2.x = 2320+40*i0
+        thorn2.y = 53
+        thorns2.append(thorn2)
+    return thorns2
 
 def create_dieblock():
     blocks=[]
@@ -135,10 +141,11 @@ def create_land():
     return land
 
 def create_world():
-    global cat,map3,fruit,wall,blocks,hblocks
+    global cat,map3,fruit,wall,blocks,hblocks,thorns2
 
     hblocks = create_helpblock()
     blocks = create_dieblock()
+    thorns2 = create_diethorn2()
     wall=create_land()
     fruit=Fruit()
     cat = Cat()
@@ -151,6 +158,8 @@ def create_world():
         i.set_map3(map3)
     for i in hblocks:
         i.set_map3(map3)
+    for i in thorns2:
+        i.set_map3(map3)
     map3.set_center_object(cat)
     cat.set_map3(map3)
     fruit.set_map3(map3)
@@ -158,8 +167,9 @@ def create_world():
 
 
 def destroy_world():
-    global cat,map3,fruit,blocks,hblocks
+    global cat,map3,fruit,blocks,hblocks,thorns2
 
+    del(thorns2)
     del(hblocks)
     del(blocks)
     del(cat)
@@ -237,11 +247,17 @@ def update(frame_time):
             Dieblock.image = load_image("hard_tile.png")
             cat.block_stop()
 
+    for thorn2 in thorns2:
+        if collide(thorn2,cat):
+            Thorn2.image = load_image("hard_thorn.png")
+            cat.die()
+
 
 #수정 필용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
     if cat.y >550:
         Dieblock.image = load_image("die_block2.png")
         Helpblock.image = load_image("die_block2.png")
+        Thorn2.image = load_image("hard_tile.png")
 
     for hblock in hblocks:
         if collide(hblock, cat):
@@ -263,6 +279,8 @@ def draw(frame_time):
         block.draw()
     for hblock in hblocks:
         hblock.draw()
+    for thorn2 in thorns2:
+        thorn2.draw()
 
 
     map3.draw_bb()
@@ -274,6 +292,8 @@ def draw(frame_time):
         block.draw_bb()
     for hblock in hblocks:
         hblock.draw_bb()
+    for thorn2 in thorns2:
+        thorn2.draw_bb()
     pass
 
     update_canvas()
