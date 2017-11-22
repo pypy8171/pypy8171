@@ -21,7 +21,7 @@ class Cat:
     LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP= 1, 1, 1, 1,1
 
     def __init__(self):
-        self.x, self.y = 100, 700
+        self.x, self.y = 100, 500
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.frame = 0
@@ -69,7 +69,7 @@ class Cat:
         self.y = clamp(-120,self.y,self.bg.h)
 
         self.a = self.total_frame
-        print("%d" % self.a)
+        #print("%d" % self.a)
 
 
 

@@ -14,11 +14,21 @@ from land3 import Land3
 from normal_dieblock import Dieblock
 from help_block import Helpblock
 from thorn import Thorn2
+#from fireball import Fire_Ball
 
 name = "hard_stage"
 
 cat = None
 map3 = None
+
+#def create_fireball():
+#    fires = []
+#    for i in range(0,1):
+#        fire = Fire_Ball()
+#        fire.x = 450
+#        fire.y = 100
+#        fires.append(fire)
+#    return fires
 
 def create_diethorn2():
     thorns2=[]
@@ -141,11 +151,12 @@ def create_land():
     return land
 
 def create_world():
-    global cat,map3,fruit,wall,blocks,hblocks,thorns2
+    global cat,map3,fruit,wall,blocks,hblocks,thorns2#,fires
 
     hblocks = create_helpblock()
     blocks = create_dieblock()
     thorns2 = create_diethorn2()
+    #fires = create_fireball()
     wall=create_land()
     fruit=Fruit()
     cat = Cat()
@@ -160,6 +171,8 @@ def create_world():
         i.set_map3(map3)
     for i in thorns2:
         i.set_map3(map3)
+    #for i in fires:
+    #    i.set_map3(map3)
     map3.set_center_object(cat)
     cat.set_map3(map3)
     fruit.set_map3(map3)
@@ -167,8 +180,9 @@ def create_world():
 
 
 def destroy_world():
-    global cat,map3,fruit,blocks,hblocks,thorns2
+    global cat,map3,fruit,blocks,hblocks,thorns2#,fires
 
+    #del(fires)
     del(thorns2)
     del(hblocks)
     del(blocks)
@@ -200,6 +214,8 @@ def handle_events(frame_time):
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_b:
+            game_framework.push_state(boss_stage)
         elif cat.x>2650:
             game_framework.change_state(boss_stage)
         else:
@@ -281,19 +297,21 @@ def draw(frame_time):
         hblock.draw()
     for thorn2 in thorns2:
         thorn2.draw()
+    #for fire in fires:
+    #    fire.draw()
 
 
-    map3.draw_bb()
-    cat.draw_bb()
-    fruit.draw_bb()
-    for ground in wall:
-        ground.draw_bb()
-    for block in blocks:
-        block.draw_bb()
-    for hblock in hblocks:
-        hblock.draw_bb()
-    for thorn2 in thorns2:
-        thorn2.draw_bb()
+    #map3.draw_bb()
+    #cat.draw_bb()
+    #fruit.draw_bb()
+    #for ground in wall:
+    #    ground.draw_bb()
+    #for block in blocks:
+    #    block.draw_bb()
+    #for hblock in hblocks:
+    #    hblock.draw_bb()
+    #for thorn2 in thorns2:
+    #    thorn2.draw_bb()
     pass
 
     update_canvas()

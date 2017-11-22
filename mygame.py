@@ -7,6 +7,9 @@ import normal_stage
 import hard_stage
 import start_state
 import title_state
+import boss_stage
 
-game_framework.run(easy_stage)
 
+open_canvas()
+game_framework.run(start_state)
+close_canvas()

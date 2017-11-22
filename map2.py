@@ -10,13 +10,14 @@ class Map2:
         self.canvas_height=get_canvas_height()
         self.w=self.image.w
         self.h=self.image.h
+        self.bgm = load_music('normal_sound.mp3')
+        self.bgm.set_volume(64)
+        self.bgm.repeat_play()
 
     def set_center_object(self,cat):
         self.center_object=cat
 
     def draw(self):
-        #self.image.draw(835,300)
-    #835 에서 -110 까지 -> 835 ~ -910
         self.image.clip_draw_to_origin(
             self.window_left, self.window_bottom,
             self.canvas_width, self.canvas_height,

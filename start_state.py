@@ -9,7 +9,7 @@ logo_time = 0.0
 
 def enter():
     global image
-    open_canvas()
+
     image=load_image('kpu_credit.png')
 
 
@@ -17,7 +17,7 @@ def enter():
 def exit():
     global image
     del(image)
-    close_canvas()
+
 
 
 

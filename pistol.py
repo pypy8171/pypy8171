@@ -1,11 +1,11 @@
-
 import random
 import game_framework
 import normal_stage
 from pico2d import *
 
-from cat import Cat
+
 class Pistol:
+    pistol = []
 
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm
     RUN_SPEED_KMPH = 20.0                    # Km / Hour
@@ -17,12 +17,12 @@ class Pistol:
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 8
 
-    image = None
+    image=None
 
-    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP,LOAD,FIRE= 1, 1, 1, 1,1,1,1
+    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP= 1, 1, 1, 1,1
 
     def __init__(self):
-        self.x, self.y = 140, 600
+        self.x, self.y = 100, 600
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.frame = 0
@@ -33,7 +33,7 @@ class Pistol:
         self.up = 0
         self.a=0
         self.updir=0
-        self.state = self.LOAD
+        self.state = self.RIGHT_STAND
         if Pistol.image == None:
             Pistol.image = load_image('pistol.png')
 
@@ -59,7 +59,7 @@ class Pistol:
         self.total_frames += Pistol.FRAMES_PER_ACTION * Pistol.ACTION_PER_TIME * frame_time
         self.total_frame += Pistol.FRAMES_PER_ACTION * Pistol.ACTION_PER_TIME*frame_time
         self.frame = int(self.total_frames+1) % 3
-        self.x +=(self.dir*distance)
+        self.x += (self.dir * distance)
         self.y +=(self.up*distance)
 
         self.x = clamp(0, self.x, self.bg.w)
@@ -67,9 +67,6 @@ class Pistol:
 
         self.a = self.total_frame
         print("%d" % self.a)
-
-        if self.x>800:
-            self.x = Cat
 
 
 
@@ -85,10 +82,53 @@ class Pistol:
     def draw(self):
         sx = self.x - self.bg.window_left
         sy = self.y - self.bg.window_bottom
-        self.image.draw(sx, sy)
+        self.image.draw( sx, sy)
+
+    def stoppipe(self):
+        if self.up ==-2:
+            self.up =0
+
+
+        if self.x>430 and self.x<570 and self.y>65 and self.y<233:
+            if self.dir==1:
+                self.x-=2
+            elif self.dir==-1:
+                self.x+=2
+
+    def stoppipe2(self):
+        if self.up ==-2:
+            self.up =0
+        if self.x>1670 and self.x<1830 and self.y>65 and self.y<180:
+            if self.dir==1:
+                self.x-=2
+            elif self.dir==-1:
+                self.x+=2
 
     def stop(self):
-        self.up=0
+        if self.up==-2:
+            self.up=0
+
+
+    def normal_stop(self):
+        if self.up==-2:
+            self.up=0
+        if self.dir==1 and self.up==0:
+            self.x-=4
+        if self.dir==-1 and self.up==0:
+            self.x+=4
+
+    def block_stop(self):
+        if self.dir==1 and self.up==2:
+            self.up=-20
+        if self.dir==-1 and self.up==2:
+            self.up=-20
+
+
+        pass
+
+    def start(self):
+        self.x = 100
+        self.y = 600
 
 
 
@@ -99,9 +139,6 @@ class Pistol:
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
-
-    def set_cat(self, bg):
-        self.bg = bg
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
@@ -126,19 +163,21 @@ class Pistol:
                 normal_stage.a=0
         elif (event.type, event.key)==(SDL_KEYDOWN,SDLK_UP):
             if self.state in(self.RIGHT_STAND,self.RIGHT_RUN,self.LEFT_STAND, self.LEFT_RUN):
-                self.state = self.JUMP
-                self.up = 2
-                self.total_frame=0
+                if self.up<1 and self.up>-1:
+                    self.state = self.JUMP
+                    self.up = 2
+                    self.total_frame=0
 
 
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_a):
-            if self.state in (self.LOAD, self.FIRE,self.RIGHT_STAND,self.RIGHT_RUN,self.LEFT_STAND, self.LEFT_RUN,self.JUMP):
-                self.state = self.FIRE
-                self.up=0
-                self.dir = 5
+            if self.state in (self.RIGHT_STAND, self.RIGHT_RUN, self.LEFT_STAND, self.LEFT_RUN):
+                if self.up < 1 and self.up > -1:
+                    self.state = self.JUMP
+                    self.up = 2
+                    self.dir=5
 
-        elif (event.type, event.key) == (SDL_KEYUP, SDLK_a):
-            #self.dir=-5
-            #if self.x<200:
-            #    self.dir=0
-            pass
+
+
+
+
+

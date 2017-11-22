@@ -108,6 +108,7 @@ class Boss:
         if self.up==-2:
             self.up=0
 
+
     def normal_stop(self):
         if self.up==-2:
             self.up=0

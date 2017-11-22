@@ -11,8 +11,7 @@ class Land4:
     def __init__(self):
         self.x, self.y = 0,0
         if Land4.image ==None:
-            Land4.image = load_image('ground.png')
-
+            Land4.image = load_image('hard_tile.png')
     def set_map1(self, bg):
         self.bg = bg
 

@@ -13,6 +13,8 @@ def enter():
     image=load_image('title.png')
 
 
+
+
 def exit():
     global image
     del(image)

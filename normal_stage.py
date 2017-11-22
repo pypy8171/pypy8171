@@ -23,6 +23,7 @@ name = "normal_stage"
 cat =None
 map2 = None
 pipe = None
+
 def create_diethorn():
     thorns=[]
     for i0 in range(0,2):
@@ -301,18 +302,18 @@ def draw(frame_time):
     for ob in obstacle:
         ob.draw()
 
-    pipe.draw_bb()
-    map2.draw_bb()
+    #pipe.draw_bb()
+    #map2.draw_bb()
     #cat.draw_bb()
-    flag.draw_bb()
-    for ground in wall:
-        ground.draw_bb()
-    for ob in obstacle:
-        ob.draw_bb()
-    for block in blocks:
-        block.draw_bb()
-    for thorn in thorns:
-        thorn.draw_bb()
+    #flag.draw_bb()
+    #for ground in wall:
+    #    ground.draw_bb()
+    #for ob in obstacle:
+    #    ob.draw_bb()
+    #for block in blocks:
+    #    block.draw_bb()
+    #for thorn in thorns:
+    #    thorn.draw_bb()
 
 
     pass
