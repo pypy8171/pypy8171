@@ -13,11 +13,21 @@ from fake_portal import Fruit
 from land3 import Land3
 from normal_dieblock import Dieblock
 from help_block import Helpblock
+from thorn import Thorn()
 
 name = "hard_stage"
 
 cat = None
 map3 = None
+
+def create_diethorn():
+    thorns=[]
+    for i0 in range(0,2):
+        thorn = Thorn()
+        thorn.x = 100+40*i0
+        thorn.y = 200
+        thorns.append(thorn)
+    return thorns
 
 def create_dieblock():
     blocks=[]
@@ -33,8 +43,8 @@ def create_helpblock():
     hblocks = []
     for i in range(0, 2):
         hblock = Helpblock()
-        hblock.x = 1300 + 40 * i
-        hblock.y = 100
+        hblock.x = 1250 + 40 * i
+        hblock.y = 180
         hblocks.append(hblock)
 
     return hblocks

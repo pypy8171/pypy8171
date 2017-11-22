@@ -14,6 +14,8 @@ from land2 import Land2
 from normal_obstacle import Obstacle2
 from fake_portal import Flag
 from normal_dieblock import Dieblock
+from thorn import Thorn
+from help_block import Helpblock
 
 
 name = "normal_stage"
@@ -21,17 +23,36 @@ name = "normal_stage"
 cat =None
 map2 = None
 pipe = None
+def create_diethorn():
+    thorns=[]
+    for i0 in range(0,2):
+        thorn = Thorn()
+        thorn.x = 100+40*i0
+        thorn.y = 200
+        thorns.append(thorn)
+
+    for i in range(0,1):
+        thorn = Thorn()
+        thorn.x = 1185 +40*i
+        thorn.y = 175
+        thorns.append(thorn)
+
+    return thorns
 
 def create_dieblock():
     blocks=[]
     for i in range(0,2):
         block=Dieblock()
-        block.x=950+40*i
+        block.x=1000+40*i
         block.y = 600
         blocks.append(block)
 
     return blocks
 
+def create_helpblock():
+
+    return blocks
+    pass
 
 def create_obstacle():
     obstacle = []
@@ -121,8 +142,10 @@ def create_land():
     return land
 
 def create_world():
-    global cat,map2, pipe, land,wall,obstacle, flag,blocks
+    global cat,map2, pipe, land,wall,obstacle, flag,blocks,thorns
+
     blocks = create_dieblock()
+    thorns = create_diethorn()
     flag = Flag()
     obstacle=create_obstacle()
     cat = Cat()
@@ -137,6 +160,8 @@ def create_world():
         i.set_map2(map2)
     for i in blocks:
         i.set_map2(map2)
+    for i in thorns:
+        i.set_map2(map2)
     map2.set_center_object(cat)
     cat.set_map2(map2)
     pipe.set_map2(map2)
@@ -146,7 +171,7 @@ def create_world():
 
 
 def destroy_world():
-    global cat,map2,pipe,land,obstacle,flag,blocks
+    global cat,map2,pipe,land,obstacle,flag,blocks,thorns
 
 
     del(cat)
@@ -156,6 +181,7 @@ def destroy_world():
     del(obstacle)
     del(flag)
     del(blocks)
+    del(thorns)
 
 
 
@@ -185,8 +211,8 @@ def handle_events(frame_time):
         elif event.type == SDL_KEYDOWN and event.key == SDLK_h:
             game_framework.push_state(hard_stage)
         elif cat.x>2100:
-            #game_framework.change_state(hard_stage)
-            game_framework.change_state(boss_stage)
+            game_framework.change_state(hard_stage)
+            #game_framework.change_state(boss_stage)
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
@@ -221,12 +247,18 @@ def update(frame_time):
     for block in blocks:
         if collide(block,cat):
             #print("clollision")
-            Dieblock.image = load_image("hard_tile.png")
+            Dieblock.image = load_image("normal_tile.png")
             cat.block_stop()
+
+    for thorn in thorns:
+        if collide(thorn, cat):
+            Thorn.image = load_image("thorn.png")
+            cat.die()
 
     # 죽었을때 다시 감추는거
     if cat.y>550:
         Dieblock.image = load_image("die_block2.png")
+        Thorn.image = load_image("normal_tile.png")
 
 
 
@@ -247,6 +279,8 @@ def update(frame_time):
 
 
 
+
+
     #if collide(map2,cat):
        # print("collision")
 
@@ -260,6 +294,8 @@ def draw(frame_time):
     flag.draw()
     for block in blocks:
         block.draw()
+    for thorn in thorns:
+        thorn.draw()
     for ground in wall:
         ground.draw()
     for ob in obstacle:
@@ -267,7 +303,7 @@ def draw(frame_time):
 
     pipe.draw_bb()
     map2.draw_bb()
-    cat.draw_bb()
+    #cat.draw_bb()
     flag.draw_bb()
     for ground in wall:
         ground.draw_bb()
@@ -275,6 +311,9 @@ def draw(frame_time):
         ob.draw_bb()
     for block in blocks:
         block.draw_bb()
+    for thorn in thorns:
+        thorn.draw_bb()
+
 
     pass
 

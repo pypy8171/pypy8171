@@ -37,7 +37,7 @@ class Cat:
         self.state = self.RIGHT_STAND
         self.index=0
         if Cat.image == None:
-            Cat.image = load_image('run_animation.png')
+            Cat.image = load_image('run_animation2.png')
 
     def set_map1(self, bg):
         self.bg = bg
@@ -60,7 +60,7 @@ class Cat:
         distance = Cat.RUN_SPEED_PPS * frame_time
         self.total_frames += Cat.FRAMES_PER_ACTION * Cat.ACTION_PER_TIME * frame_time
         self.total_frame += Cat.FRAMES_PER_ACTION * Cat.ACTION_PER_TIME*frame_time
-        self.frame = int(self.total_frames+1) % 3
+        self.frame = int(self.total_frames+1) % 5
         self.x += (self.dir * distance)
         if self.ystate ==0:
             self.y +=(self.up*distance)
@@ -82,12 +82,10 @@ class Cat:
             self.x ,self.y = 100,600
 
 
-
-
     def draw(self):
         sx = self.x - self.bg.window_left
         sy = self.y - self.bg.window_bottom
-        self.image.clip_draw(self.frame * 103, self.state * 100, 97, 100, sx, sy)
+        self.image.clip_draw(self.frame * 100, self.state * 100, 93, 100, sx, sy)
 
     def stoppipe(self):
         if self.up ==-2:
@@ -157,10 +155,24 @@ class Cat:
 
         pass
 
+    def die(self):
+        self.up+=1
+        Cat.image = load_image("blood.png")
+        delay(0.1)
+        if self.up>1:
+            self.start()
+
+
+
+
+
+
     def start(self):
+        Cat.image = load_image("run_animation2.png")
         self.x = 100
         self.y = 700
         self.up =-2
+
 
     def get_bb(self):
         return self.x - 20-self.bg.window_left, self.y - 40-self.bg.window_bottom, self.x+25-self.bg.window_left, self.y+40-self.bg.window_bottom
