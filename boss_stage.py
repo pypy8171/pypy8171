@@ -9,9 +9,9 @@ import hard_stage
 
 
 from cat import Cat # import Boy class from boy.py
-from land4 import Land4
+from boss_land import Boss_Land
 from pistol import Pistol
-from map4 import Map4
+from boss_map import Boss_Map
 from boss import Boss
 
 
@@ -27,7 +27,7 @@ pistol=None
 def create_land():
     land = []
     for i in range(0, 22):
-        ground = Land4()
+        ground = Boss_Land()
         ground.x =20+40*i
         ground.y = 40
         land.append(ground)
@@ -44,8 +44,8 @@ def create_world():
     boss = Boss()
     cat = Cat()
     pistol=Pistol()
-    map4=Map4()
-    land=Land4()
+    map4=Boss_Map()
+    land=Boss_Land()
     wall = create_land()
 
 

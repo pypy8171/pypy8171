@@ -36,7 +36,7 @@ class Fire_Ball:
         self.bg =bg
 
     def update(self, frame_time):
-        self.y = self.up*frame_time
+        self.y+=5
         pass
 
     def draw(self):

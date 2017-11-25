@@ -9,9 +9,9 @@ import hard_stage
 
 
 from cat import Cat # import Boy class from boy.py
-from map1 import Map1
+from easy_map import Easy_Map
 from pipe import Pipe1
-from land import Land
+from easy_land import Easy_Land
 from fake_portal import Door
 #from pistol import Pistol
 
@@ -32,13 +32,13 @@ door=None
 def create_land():
     land = []
     for i in range(0, 22):
-        ground = Land()
+        ground = Easy_Land()
         ground.x =20+40*i
         ground.y = 35
         land.append(ground)
 
     for j in range(0,21):
-        ground = Land()
+        ground = Easy_Land()
         ground.x = 1000+ 40*j
         ground.y = 40
         land.append(ground)
@@ -52,9 +52,9 @@ def create_world():
     global cat,map1, pipe,land, wall,door#, pistol
     door=Door()
     cat = Cat()
-    map1 = Map1()
+    map1 = Easy_Map()
     pipe = Pipe1()
-    land=Land()
+    land=Easy_Land()
     wall = create_land()
     #pistol = Pistol()
 

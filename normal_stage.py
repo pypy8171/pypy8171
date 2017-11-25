@@ -8,9 +8,9 @@ import hard_stage
 import boss_stage
 
 from cat import Cat # import Boy class from boy.py
-from map2 import Map2
+from normal_map import Normal_Map
 from pipe import Pipe2
-from land2 import Land2
+from normal_land import Normal_Land
 from normal_obstacle import Obstacle2
 from fake_portal import Flag
 from normal_dieblock import Dieblock
@@ -111,25 +111,25 @@ def create_obstacle():
 def create_land():
     land = []
     for i in range(0, 22):
-        ground = Land2()
+        ground = Normal_Land()
         ground.x =20+40*i
         ground.y = 35
         land.append(ground)
 
     for k in range(0, 11):
-        ground = Land2()
+        ground = Normal_Land()
         ground.x =1100+40*k
         ground.y = 35
         land.append(ground)
 
     for j in range(0,7):
-        ground = Land2()
+        ground = Normal_Land()
         ground.x = 1640+40*j
         ground.y = 35
         land.append(ground)
 
     for k in range(0,4):
-        ground=Land2()
+        ground=Normal_Land()
         ground.x=2000+40*k
         ground.y=35
         land.append(ground)
@@ -150,9 +150,9 @@ def create_world():
     flag = Flag()
     obstacle=create_obstacle()
     cat = Cat()
-    map2 = Map2()
+    map2 = Normal_Map()
     pipe = Pipe2()
-    land = Land2()
+    land = Normal_Land()
     wall = create_land()
 
     for i in wall:

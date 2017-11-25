@@ -8,27 +8,28 @@ import normal_stage
 import boss_stage
 
 from cat import Cat # import Boy class from boy.py
-from map3 import Map3
+from hard_map import Hard_Map
 from fake_portal import Fruit
-from land3 import Land3
+from hard_land import Hard_Land
 from normal_dieblock import Dieblock
 from help_block import Helpblock
 from thorn import Thorn2
-#from fireball import Fire_Ball
+from fireball import Fire_Ball
 
 name = "hard_stage"
 
 cat = None
 map3 = None
 
-#def create_fireball():
-#    fires = []
-#    for i in range(0,1):
-#        fire = Fire_Ball()
-#        fire.x = 450
-#        fire.y = 100
-#        fires.append(fire)
-#    return fires
+def create_fireball():
+    fires = []
+    for i in range(0,1):
+        fire = Fire_Ball()
+        fire.x = 450
+        fire.y = 100
+        fires.append(fire)
+
+    return fires
 
 def create_diethorn2():
     thorns2=[]
@@ -69,7 +70,7 @@ def create_land():
     land = []
     #처음 시작 지점 땅
     #for i in range(0, 7):
-    ground = Land3()
+    ground = Hard_Land()
     ground.ynum=5
     ground.xnum=10
     ground.x =30+40*ground.xnum/2
@@ -81,7 +82,7 @@ def create_land():
 
 
     #두번째 박스
-    ground = Land3()
+    ground = Hard_Land()
     ground.xnum=6
     ground.ynum=5
     ground.x = 630+40*ground.xnum/2
@@ -89,14 +90,14 @@ def create_land():
     land.append(ground)
 
     #첫뻔째 두번째 사이 박스 하나
-    ground = Land3()
+    ground = Hard_Land()
     ground.xnum = 1
     ground.ynum = 1
     ground.x = 530 + 40 * ground.xnum / 2
     ground.y = 120 + 40 * ground.ynum / 2
     land.append(ground)
 
-    ground = Land3()
+    ground = Hard_Land()
     ground.xnum = 2
     ground.ynum = 1
     ground.x = 990 + 40 * ground.xnum / 2
@@ -104,7 +105,7 @@ def create_land():
     land.append(ground)
 
 
-    ground = Land3()
+    ground = Hard_Land()
     ground.xnum = 1
     ground.ynum = 1
     ground.x = 1195+40*ground.xnum/2
@@ -113,35 +114,35 @@ def create_land():
 
     #3개짜리
 
-    ground = Land3()
+    ground = Hard_Land()
     ground.xnum=1
     ground.ynum=3
     ground.x = 1380
     ground.y =435-40*ground.ynum/2
     land.append(ground)
 
-    ground = Land3()
+    ground = Hard_Land()
     ground.xnum = 2
     ground.ynum = 2
     ground.x = 1440
     ground.y = 100 - 40 * ground.ynum / 2
     land.append(ground)
 
-    ground = Land3()
+    ground = Hard_Land()
     ground.xnum = 6
     ground.ynum = 6
     ground.x = 1600
     ground.y = 220 - 40 * ground.ynum / 2
     land.append(ground)
 
-    ground = Land3()
+    ground = Hard_Land()
     ground.xnum = 4
     ground.ynum = 6
     ground.x = 1945
     ground.y = 260 - 40 * ground.ynum / 2
     land.append(ground)
 
-    ground = Land3()
+    ground = Hard_Land()
     ground.xnum = 20
     ground.ynum = 2
     ground.x = 2565
@@ -151,16 +152,16 @@ def create_land():
     return land
 
 def create_world():
-    global cat,map3,fruit,wall,blocks,hblocks,thorns2#,fires
+    global cat,map3,fruit,wall,blocks,hblocks,thorns2,fires
 
     hblocks = create_helpblock()
     blocks = create_dieblock()
     thorns2 = create_diethorn2()
-    #fires = create_fireball()
-    wall=create_land()
+    fires = create_fireball()
+    wall = create_land()
     fruit=Fruit()
     cat = Cat()
-    map3 = Map3()
+    map3 = Hard_Map()
 
 
     for i in wall:
@@ -171,8 +172,8 @@ def create_world():
         i.set_map3(map3)
     for i in thorns2:
         i.set_map3(map3)
-    #for i in fires:
-    #    i.set_map3(map3)
+    for i in fires:
+        i.set_map3(map3)
     map3.set_center_object(cat)
     cat.set_map3(map3)
     fruit.set_map3(map3)
@@ -242,8 +243,10 @@ def collide(a, b):
 def update(frame_time):
     cat.update(frame_time)
     map3.update(frame_time)
-
-
+    for fire in fires:
+        fire.update(frame_time)
+    if fire.y>600:
+        fire.y=0
     for ground in wall:
         #if collide(ground, cat) and ground.y-20< cat.y+20 :
         #    cat.stop()
@@ -297,8 +300,8 @@ def draw(frame_time):
         hblock.draw()
     for thorn2 in thorns2:
         thorn2.draw()
-    #for fire in fires:
-    #    fire.draw()
+    for fire in fires:
+        fire.draw()
 
 
     #map3.draw_bb()
