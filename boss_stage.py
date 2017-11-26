@@ -125,6 +125,10 @@ def update(frame_time):
     pistol.update(frame_time)
     boss.update(frame_time)
 
+    for ground in wall:
+        if collide(ground,boss):
+            boss.Boss_Run(cat.Cat_Dir())
+
     if collide(cat,pistol):
         pistol.stop()
 
@@ -132,9 +136,10 @@ def update(frame_time):
         print("collistion")
         pistol.stop()
         boss.remove()
-    for ground in wall:
-        if collide(ground,boss):
-            boss.stop()
+
+    #for ground in wall:
+    #    if collide(ground,boss):
+    #        boss.stop()
     for ground in wall:
         if collide(ground,cat):
             cat.stop()

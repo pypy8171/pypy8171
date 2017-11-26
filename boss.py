@@ -75,6 +75,14 @@ class Boss:
 #        elif self.updir==1 and self.y<115:
 #            self.up, self.updir=0,0
 
+    def Boss_Run(self, cat):
+        if self.x>cat:
+            self.dir=-0.5
+        if self.x<cat:
+            self.dir=0.5
+        if self.up == -2:
+            self.up = 0
+
 
 
     def draw(self):
@@ -84,44 +92,6 @@ class Boss:
 
     def remove(self):
         self.dir = 5
-    def stoppipe(self):
-        if self.up ==-2:
-            self.up =0
-
-
-        if self.x>430 and self.x<570 and self.y>65 and self.y<233:
-            if self.dir==1:
-                self.x-=2
-            elif self.dir==-1:
-                self.x+=2
-
-    def stoppipe2(self):
-        if self.up ==-2:
-            self.up =0
-        if self.x>1670 and self.x<1830 and self.y>65 and self.y<180:
-            if self.dir==1:
-                self.x-=2
-            elif self.dir==-1:
-                self.x+=2
-
-    def stop(self):
-        if self.up==-2:
-            self.up=0
-
-
-    def normal_stop(self):
-        if self.up==-2:
-            self.up=0
-        if self.dir==1 and self.up==0:
-            self.x-=4
-        if self.dir==-1 and self.up==0:
-            self.x+=4
-
-    def block_stop(self):
-        if self.dir==1 and self.up==2:
-            self.up=-20
-        if self.dir==-1 and self.up==2:
-            self.up=-20
 
 
     def get_bb(self):

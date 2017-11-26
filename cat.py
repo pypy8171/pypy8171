@@ -81,6 +81,8 @@ class Cat:
         if self.y<-0:
             self.x ,self.y = 100,600
 
+    def Cat_Dir(self):
+        return self.x
 
     def draw(self):
         sx = self.x - self.bg.window_left
