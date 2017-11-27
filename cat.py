@@ -4,6 +4,9 @@ import normal_stage
 from pico2d import *
 
 
+
+
+
 class Cat:
 
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm
@@ -36,6 +39,7 @@ class Cat:
         self.xstate=0
         self.state = self.RIGHT_STAND
         self.index=0
+        self.pistolfire=0
         if Cat.image == None:
             Cat.image = load_image('run_animation2.png')
 
@@ -50,12 +54,8 @@ class Cat:
 
 
 
-    def update(self, frame_time):
-        #def clamp(minimum, x, maximum):
-        #    return max(minimum, min(x, maximum))
-        #def clamp(minimum,y,maximum):
-        #    return max(minimum,min(y,maximum))
 
+    def update(self, frame_time):
         self.life_time += frame_time
         distance = Cat.RUN_SPEED_PPS * frame_time
         self.total_frames += Cat.FRAMES_PER_ACTION * Cat.ACTION_PER_TIME * frame_time
@@ -69,20 +69,24 @@ class Cat:
         self.y = clamp(-120,self.y,self.bg.h)
 
         self.a = self.total_frame
-        #print("%d" % self.a)
 
 
 
         if self.a%8>7:
             self.up, self.updir=-2,1
-#        elif self.updir==1 and self.y<115:
-#            self.up, self.updir=0,0
+
 
         if self.y<-0:
             self.x ,self.y = 100,600
 
     def Cat_Dir(self):
         return self.x
+
+    def Cat_x(self):
+        return self.x
+
+    def Cat_y(self):
+        return self.y
 
     def draw(self):
         sx = self.x - self.bg.window_left
@@ -92,7 +96,6 @@ class Cat:
     def stoppipe(self):
         if self.up ==-2:
             self.up =0
-
 
         if self.x>430 and self.x<570 and self.y>65 and self.y<233:
             if self.dir==1:
@@ -123,7 +126,6 @@ class Cat:
             self.up=0
             self.y +=5
 
-
     def stop2(self):
         if self.dir==-1:
             self.dir=1
@@ -131,9 +133,6 @@ class Cat:
         elif self.dir==1:
             self.dir=-1
             self.x-=5
-
-
-
 
     def normal_stop(self):
         if self.up==-2:
@@ -158,16 +157,12 @@ class Cat:
         pass
 
     def die(self):
+        self.dir=0
         self.up+=1
         Cat.image = load_image("blood.png")
         delay(0.1)
         if self.up>1:
             self.start()
-
-
-
-
-
 
     def start(self):
         Cat.image = load_image("run_animation2.png")
@@ -216,7 +211,8 @@ class Cat:
                 self.state = self.JUMP
                 self.up = 2
                 self.total_frame=0
-
+        elif (event.type, event.key)==(SDL_KEYDOWN,SDLK_a):
+            self.pistolfire=1
 
 
 

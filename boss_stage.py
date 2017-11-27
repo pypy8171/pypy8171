@@ -10,7 +10,7 @@ import hard_stage
 
 from cat import Cat # import Boy class from boy.py
 from boss_land import Boss_Land
-from pistol import Pistol
+from pistol_fire import Pistol_Fire
 from boss_map import Boss_Map
 from boss import Boss
 
@@ -43,7 +43,7 @@ def create_world():
 
     boss = Boss()
     cat = Cat()
-    pistol=Pistol()
+    pistol=Pistol_Fire()
     map4=Boss_Map()
     land=Boss_Land()
     wall = create_land()
@@ -57,6 +57,7 @@ def create_world():
     land.set_map4(map4)
     pistol.set_map4(map4)
     boss.set_map4(map4)
+    pistol.set_cat(cat)
 
 def destroy_world():
     global cat,map4,land,pistol
@@ -129,9 +130,6 @@ def update(frame_time):
         if collide(ground,boss):
             boss.Boss_Run(cat.Cat_Dir())
 
-    if collide(cat,pistol):
-        pistol.stop()
-
     if collide(boss,pistol):
         print("collistion")
         pistol.stop()
@@ -143,8 +141,6 @@ def update(frame_time):
     for ground in wall:
         if collide(ground,cat):
             cat.stop()
-        elif collide(ground,pistol):
-            pistol.stop()
 
     if collide(boss,cat):
         cat.die()
