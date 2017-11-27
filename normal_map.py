@@ -4,7 +4,7 @@ from pico2d import *
 
 class Normal_Map:
     def __init__(self):
-        self.image= load_image('stage2.png')
+        self.image= load_image('normal_stage.png')
         self.speed=0
         self.canvas_width=get_canvas_width()
         self.canvas_height=get_canvas_height()

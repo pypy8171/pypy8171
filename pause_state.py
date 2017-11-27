@@ -20,7 +20,7 @@ counter =0
 class Pause:
     def __init__(self):
         self.x1, self.y1 = 400, 200
-        self.image = load_image('pause1.png')
+        self.image = load_image('pause.png')
         self.timer = 0;
 
     def update(self):

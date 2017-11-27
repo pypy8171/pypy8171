@@ -135,9 +135,6 @@ def update(frame_time):
         pistol.stop()
         boss.remove()
 
-    #for ground in wall:
-    #    if collide(ground,boss):
-    #        boss.stop()
     for ground in wall:
         if collide(ground,cat):
             cat.stop()

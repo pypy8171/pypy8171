@@ -15,6 +15,7 @@ from normal_dieblock import Dieblock
 from help_block import Helpblock
 from thorn import Thorn2
 from fireball import Fire_Ball
+from pistol_fire import Pistol_Fire
 
 name = "hard_stage"
 
@@ -22,6 +23,8 @@ cat = None
 map3 = None
 
 def create_fireball():
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    Hard_Map_Size = 10 / 3  # 10 pixel 3m
     fires = []
     for i in range(0,1):
         fire = Fire_Ball()
@@ -152,7 +155,7 @@ def create_land():
     return land
 
 def create_world():
-    global cat,map3,fruit,wall,blocks,hblocks,thorns2,fires
+    global cat,map3,fruit,wall,blocks,hblocks,thorns2,fires,pistol
 
     hblocks = create_helpblock()
     blocks = create_dieblock()
@@ -162,6 +165,7 @@ def create_world():
     fruit=Fruit()
     cat = Cat()
     map3 = Hard_Map()
+    pistol=Pistol_Fire()
 
 
     for i in wall:
@@ -177,13 +181,16 @@ def create_world():
     map3.set_center_object(cat)
     cat.set_map3(map3)
     fruit.set_map3(map3)
+    pistol.set_map3(map3)
+    pistol.set_cat(cat)
 
 
 
 def destroy_world():
-    global cat,map3,fruit,blocks,hblocks,thorns2#,fires
+    global cat,map3,fruit,blocks,hblocks,thorns2,fires,pistol
 
-    #del(fires)
+    del(pistol)
+    del(fires)
     del(thorns2)
     del(hblocks)
     del(blocks)
@@ -243,10 +250,12 @@ def collide(a, b):
 def update(frame_time):
     cat.update(frame_time)
     map3.update(frame_time)
+    pistol.update(frame_time)
     for fire in fires:
         fire.update(frame_time)
     if fire.y>600:
         fire.y=0
+
     for ground in wall:
         #if collide(ground, cat) and ground.y-20< cat.y+20 :
         #    cat.stop()
@@ -271,6 +280,9 @@ def update(frame_time):
             Thorn2.image = load_image("hard_thorn.png")
             cat.die()
 
+    if collide(fire,cat):
+        cat.die()
+
 
 #수정 필용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
     if cat.y >550:
@@ -292,6 +304,7 @@ def draw(frame_time):
     map3.draw()
     cat.draw()
     fruit.draw()
+    pistol.draw()
     for ground in wall:
         ground.draw()
     for block in blocks:

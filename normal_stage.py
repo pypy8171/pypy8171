@@ -25,6 +25,8 @@ map2 = None
 pipe = None
 
 def create_diethorn():
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    Normal_Map_Size = 10 / 3  # 10 pixel 3m
     thorns=[]
     for i0 in range(0,2):
         thorn = Thorn()

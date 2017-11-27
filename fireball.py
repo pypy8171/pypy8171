@@ -24,7 +24,7 @@ class Fire_Ball:
         self.y=100
         self.up=1
         if Fire_Ball.image ==None:
-            Fire_Ball.image = load_image('fire.png')
+            Fire_Ball.image = load_image('fireball.png')
 
     def set_map1(self, bg):
         self.bg = bg
@@ -43,7 +43,7 @@ class Fire_Ball:
         self.image.draw(self.x - self.bg.window_left, self.y - self.bg.window_bottom)
 
     def get_bb(self):
-        return self.x-50-self.bg.window_left,self.y-80-self.bg.window_bottom,self.x+45-self.bg.window_left,self.y+50-self.bg.window_bottom
+        return self.x-20-self.bg.window_left,self.y-20-self.bg.window_bottom,self.x+20-self.bg.window_left,self.y+20-self.bg.window_bottom
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())

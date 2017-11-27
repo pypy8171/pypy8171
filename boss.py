@@ -91,7 +91,7 @@ class Boss:
         self.image.clip_draw(self.frame*95,20,85,90, sx, sy)
 
     def remove(self):
-        self.dir = 5
+        self.dir = 100
 
 
     def get_bb(self):

@@ -6,12 +6,15 @@ import json
 
 
 class Easy_Land:
+    PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 300 cm
+
     image = None;
 
     def __init__(self):
+
         self.x, self.y = 0,0
         if Easy_Land.image ==None:
-            Easy_Land.image = load_image('ground.png')
+            Easy_Land.image = load_image('easy_ground.png')
 
     def set_map1(self, bg):
         self.bg = bg
@@ -23,6 +26,8 @@ class Easy_Land:
         self.bg =bg
 
     def update(self, frame_time):
+        distance = Easy_Land.PIXEL_PER_METER * frame_time
+        self.x+=distance
         pass
 
     def draw(self):

@@ -28,18 +28,10 @@ class Hard_Land:
         pass
 
     def draw(self):
-
         for i in range(0,self.xnum):
             for j in range(0,self.ynum):
                 self.image.draw(self.x+(i*40)-(40*self.xnum/2)-self.bg.window_left,self.y+(j*40)-(40*self.ynum/2)-self.bg.window_bottom)
-        #elif self.ynum>1:
-        #    for i in range(0,self.ynum):
-        #        self.image.draw(self.x-20-self.bg.window_left,self.y+(i*40)-(40*self.ynum/2)-self.bg.window_bottom)
-        #elif self.xnum>1 and self.ynum>1:
-        #    for i in range(0,self.xnum):
-        #        for j in range(0,self.ynum):
-        #            self.image.draw(self.x + (i * 40) - (40 * self.xnum / 2) - self.bg.window_left,
-        #                            self.y+(i*40)-(40*self.ynum/2)- self.bg.window_bottom)
+
     def get_bb(self):
         return self.x - 20-(40*self.xnum/2) - self.bg.window_left, self.y-20-(40*self.ynum/2)-self.bg.window_bottom,self.x+20+(40*self.xnum/2-40)-self.bg.window_left,self.y-20+(40*self.ynum/2)-self.bg.window_bottom
 

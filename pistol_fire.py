@@ -52,12 +52,13 @@ class Pistol_Fire:
             self.dir=4
 
         if self.x>800:
-            self.x = self.cat.x+50
+            self.x=self.cat.x
 
         pass
 
     def stop(self):
         self.cat.pistolfire==0
+        self.x=self.cat.x
 
     def draw(self):
         sx = self.x - self.bg.window_left

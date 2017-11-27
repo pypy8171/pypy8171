@@ -30,6 +30,9 @@ door=None
 
 
 def create_land():
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    Easy_Map_Size=10/3 # 10 pixel 3m
+
     land = []
     for i in range(0, 22):
         ground = Easy_Land()
@@ -179,7 +182,7 @@ def draw(frame_time):
     #pipe.draw_bb()
     #map1.draw_bb()
     #cat.draw_bb()
-    #land.draw_bb()
+    land.draw_bb()
     #door.draw_bb()
     #for ground in wall:
     #    ground.draw_bb()

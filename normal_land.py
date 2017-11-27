@@ -11,7 +11,7 @@ class Normal_Land:
     def __init__(self):
         self.x, self.y = 0,30
         if Normal_Land.image ==None:
-            Normal_Land.image = load_image('ground2.png')
+            Normal_Land.image = load_image('normal_ground.png')
 
     def set_map1(self, bg):
         self.bg = bg
