@@ -17,19 +17,25 @@ from thorn import Thorn2
 from fireball import Fire_Ball
 from pistol_fire import Pistol_Fire
 
+# 840M짜리맵
 name = "hard_stage"
 
 cat = None
 map3 = None
 
+PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 300 cm
+GROUND_WIDTH_METER = 12
+GROUND_HEIGHT_METER = 12
+
+GROUND_WIDTH = (GROUND_WIDTH_METER * PIXEL_PER_METER)
+GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
+
 def create_fireball():
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    Hard_Map_Size = 10 / 3  # 10 pixel 3m
     fires = []
     for i in range(0,1):
         fire = Fire_Ball()
-        fire.x = 450
-        fire.y = 100
+        fire.x = GROUND_WIDTH*11
+        fire.y = 0
         fires.append(fire)
 
     return fires
@@ -38,13 +44,13 @@ def create_diethorn2():
     thorns2=[]
     for i0 in range(0,1):
         thorn2 = Thorn2()
-        thorn2.x = 530+40*i0
-        thorn2.y = 125
+        thorn2.x = 530+GROUND_WIDTH*i0
+        thorn2.y = 130
         thorns2.append(thorn2)
 
     for i0 in range(0,2):
         thorn2 = Thorn2()
-        thorn2.x = 2320+40*i0
+        thorn2.x = 2320+GROUND_WIDTH*i0
         thorn2.y = 53
         thorns2.append(thorn2)
     return thorns2
@@ -53,8 +59,8 @@ def create_dieblock():
     blocks=[]
     for i in range(0,2):
         block=Dieblock()
-        block.x=1200+40*i
-        block.y = 500
+        block.x=1200+GROUND_WIDTH*i
+        block.y = 12.5*GROUND_HEIGHT
         blocks.append(block)
 
     return blocks
@@ -63,8 +69,8 @@ def create_helpblock():
     hblocks = []
     for i in range(0, 2):
         hblock = Helpblock()
-        hblock.x = 1250 + 40 * i
-        hblock.y = 180
+        hblock.x = 1250 + GROUND_WIDTH * i
+        hblock.y = 4.5*GROUND_HEIGHT
         hblocks.append(hblock)
 
     return hblocks
@@ -76,8 +82,8 @@ def create_land():
     ground = Hard_Land()
     ground.ynum=5
     ground.xnum=10
-    ground.x =30+40*ground.xnum/2
-    ground.y = 120
+    ground.x =30+GROUND_WIDTH*ground.xnum/2
+    ground.y = 3*GROUND_HEIGHT
     land.append(ground)
 
 
@@ -88,31 +94,31 @@ def create_land():
     ground = Hard_Land()
     ground.xnum=6
     ground.ynum=5
-    ground.x = 630+40*ground.xnum/2
-    ground.y = 20+40*ground.ynum/2
+    ground.x = 630+GROUND_WIDTH*ground.xnum/2
+    ground.y = 20+GROUND_HEIGHT*ground.ynum/2
     land.append(ground)
 
     #첫뻔째 두번째 사이 박스 하나
     ground = Hard_Land()
     ground.xnum = 1
     ground.ynum = 1
-    ground.x = 530 + 40 * ground.xnum / 2
-    ground.y = 120 + 40 * ground.ynum / 2
+    ground.x = 530 + GROUND_WIDTH * ground.xnum / 2
+    ground.y = 120 + GROUND_HEIGHT * ground.ynum / 2
     land.append(ground)
 
     ground = Hard_Land()
     ground.xnum = 2
     ground.ynum = 1
-    ground.x = 990 + 40 * ground.xnum / 2
-    ground.y = 267 + 40 * ground.ynum / 2
+    ground.x = 990 + GROUND_WIDTH * ground.xnum / 2
+    ground.y = 267 + GROUND_HEIGHT * ground.ynum / 2
     land.append(ground)
 
 
     ground = Hard_Land()
     ground.xnum = 1
     ground.ynum = 1
-    ground.x = 1195+40*ground.xnum/2
-    ground.y =310+ 40* ground.ynum/2
+    ground.x = 1195+GROUND_WIDTH*ground.xnum/2
+    ground.y =310+ GROUND_HEIGHT* ground.ynum/2
     land.append(ground)
 
     #3개짜리
@@ -121,35 +127,35 @@ def create_land():
     ground.xnum=1
     ground.ynum=3
     ground.x = 1380
-    ground.y =435-40*ground.ynum/2
+    ground.y =435-GROUND_HEIGHT*ground.ynum/2
     land.append(ground)
 
     ground = Hard_Land()
     ground.xnum = 2
     ground.ynum = 2
     ground.x = 1440
-    ground.y = 100 - 40 * ground.ynum / 2
+    ground.y = 100 - GROUND_HEIGHT * ground.ynum / 2
     land.append(ground)
 
     ground = Hard_Land()
     ground.xnum = 6
     ground.ynum = 6
     ground.x = 1600
-    ground.y = 220 - 40 * ground.ynum / 2
+    ground.y = 220 - GROUND_HEIGHT * ground.ynum / 2
     land.append(ground)
 
     ground = Hard_Land()
     ground.xnum = 4
     ground.ynum = 6
     ground.x = 1945
-    ground.y = 260 - 40 * ground.ynum / 2
+    ground.y = 260 - GROUND_HEIGHT * ground.ynum / 2
     land.append(ground)
 
     ground = Hard_Land()
     ground.xnum = 20
     ground.ynum = 2
     ground.x = 2565
-    ground.y = 90 - 40 * ground.ynum / 2
+    ground.y = 90 - GROUND_HEIGHT * ground.ynum / 2
     land.append(ground)
 
     return land
@@ -253,18 +259,15 @@ def update(frame_time):
     pistol.update(frame_time)
     for fire in fires:
         fire.update(frame_time)
+
     if fire.y>600:
         fire.y=0
 
     for ground in wall:
-        #if collide(ground, cat) and ground.y-20< cat.y+20 :
-        #    cat.stop()
         if collide(ground, cat) :
             cat.stop2()
         if collide(ground, cat) and ground.y<cat.y:
             cat.stop_hard()
-        #elif collide(ground,cat) and ground.
-
 
     if collide(fruit,cat):
         cat.start()
@@ -286,8 +289,8 @@ def update(frame_time):
 
 #수정 필용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
     if cat.y >550:
-        Dieblock.image = load_image("die_block2.png")
-        Helpblock.image = load_image("die_block2.png")
+        Dieblock.image = load_image("die_block.png")
+        Helpblock.image = load_image("die_block.png")
         Thorn2.image = load_image("hard_tile.png")
 
     for hblock in hblocks:

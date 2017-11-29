@@ -17,8 +17,7 @@ from pistol_fire import Pistol_Fire
 
 #from pistol import Pistol
 
-
-
+# 540m 짜리맵
 name = "easy_stage"
 
 cat = None
@@ -28,24 +27,29 @@ land = None
 door=None
 #pistol=None
 
+PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 300 cm
+GROUND_WIDTH_METER = 12
+GROUND_HEIGHT_METER = 12
 
-
+GROUND_WIDTH = (GROUND_WIDTH_METER * PIXEL_PER_METER)
+GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
 
 def create_land():
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 30 cm
     Easy_Map_Size=10/3 # 10 pixel 3m
+    #ground 하나에 12M
 
     land = []
     for i in range(0, 22):
         ground = Easy_Land()
-        ground.x =20+40*i
-        ground.y = 35
+        ground.x =20+GROUND_WIDTH*i
+        ground.y = GROUND_HEIGHT
         land.append(ground)
 
     for j in range(0,21):
         ground = Easy_Land()
-        ground.x = 1000+ 40*j
-        ground.y = 40
+        ground.x = 1000+ GROUND_WIDTH*j
+        ground.y = GROUND_HEIGHT
         land.append(ground)
 
 
@@ -84,10 +88,6 @@ def destroy_world():
     del(land)
     del(pistol)
 
-
-
-
-
 def enter():
     game_framework.reset_time()
     create_world()
@@ -123,8 +123,6 @@ def handle_events(frame_time):
             else:
                 cat.handle_event(event)
                 map1.handle_event(event)
-                #pistol.handle_event(event)
-                #land.handle_event(event)
 
 
 def collide(a, b):
@@ -140,10 +138,8 @@ def collide(a, b):
 
 
 def update(frame_time):
-
     cat.update(frame_time)
     map1.update(frame_time)
-    #land.update(frame_time)
     pistol.update(frame_time)
 
 

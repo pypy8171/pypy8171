@@ -23,13 +23,21 @@ pipe = None
 land = None
 pistol=None
 
+#240M짜리맵
+
+PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 300 cm
+GROUND_WIDTH_METER = 12
+GROUND_HEIGHT_METER = 12
+
+GROUND_WIDTH = (GROUND_WIDTH_METER * PIXEL_PER_METER)
+GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
 
 def create_land():
     land = []
     for i in range(0, 22):
         ground = Boss_Land()
-        ground.x =20+40*i
-        ground.y = 40
+        ground.x =20+GROUND_WIDTH*i
+        ground.y = GROUND_HEIGHT
         land.append(ground)
 
 

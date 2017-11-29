@@ -18,27 +18,38 @@ from thorn import Thorn
 from pistol_fire import Pistol_Fire
 from help_block import Helpblock
 
-
+#660M 짜리맵
 name = "normal_stage"
 
 cat =None
 map2 = None
 pipe = None
 
+PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 300 cm
+GROUND_WIDTH_METER = 12
+GROUND_HEIGHT_METER = 12
+
+GROUND_WIDTH = (GROUND_WIDTH_METER * PIXEL_PER_METER)
+GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
+
 def create_diethorn():
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    Normal_Map_Size = 10 / 3  # 10 pixel 3m
     thorns=[]
     for i0 in range(0,2):
         thorn = Thorn()
-        thorn.x = 100+40*i0
-        thorn.y = 200
+        thorn.x = 100+GROUND_WIDTH*i0
+        thorn.y = 5*GROUND_HEIGHT
         thorns.append(thorn)
 
     for i in range(0,1):
         thorn = Thorn()
-        thorn.x = 1185 +40*i
-        thorn.y = 175
+        thorn.x = 1185 +GROUND_WIDTH*i
+        thorn.y = 4.5*GROUND_WIDTH
+        thorns.append(thorn)
+
+    for i2 in range(0,1):
+        thorn=Thorn()
+        thorn.x = 980+GROUND_WIDTH*i2
+        thorn.y=4*GROUND_HEIGHT
         thorns.append(thorn)
 
     return thorns
@@ -47,7 +58,7 @@ def create_dieblock():
     blocks=[]
     for i in range(0,2):
         block=Dieblock()
-        block.x=1000+40*i
+        block.x=1000+GROUND_WIDTH*i
         block.y = 600
         blocks.append(block)
 
@@ -63,7 +74,7 @@ def create_obstacle():
 
     for i in range(0,1):
         ob=Obstacle2()
-        ob.x = 625+40*i
+        ob.x = 625+GROUND_WIDTH*i
         ob.y = 87
         obstacle.append(ob)
 
@@ -76,37 +87,37 @@ def create_obstacle():
     for j in range(0,2):
         ob=Obstacle2()
         ob.x = 700
-        ob.y = 87+ 40*j
+        ob.y = 87+ GROUND_HEIGHT*j
         obstacle.append(ob)
 
     for j in range(0,2):
         ob=Obstacle2()
         ob.x = 1271
-        ob.y = 87+ 40*j
+        ob.y = 87+ GROUND_HEIGHT*j
         obstacle.append(ob)
 
     for k in range(0,3):
         ob=Obstacle2()
         ob.x = 787
-        ob.y = 87+43*k
+        ob.y = 87+(GROUND_HEIGHT+3)*k
         obstacle.append(ob)
 
     for k in range(0,3):
         ob=Obstacle2()
         ob.x = 1183
-        ob.y = 87+43*k
+        ob.y = 87+(GROUND_HEIGHT+3)*k
         obstacle.append(ob)
 
     for l in range(0,4):
         ob=Obstacle2()
         ob.x = 877
-        ob.y = 87+43*l
+        ob.y = 87+(GROUND_HEIGHT+3)*l
         obstacle.append(ob)
 
     for l in range(0,4):
         ob=Obstacle2()
         ob.x = 1097
-        ob.y = 87+43*l
+        ob.y = 87+(GROUND_HEIGHT+3)*l
         obstacle.append(ob)
 
 
@@ -115,26 +126,26 @@ def create_land():
     land = []
     for i in range(0, 22):
         ground = Normal_Land()
-        ground.x =20+40*i
-        ground.y = 35
+        ground.x =20+GROUND_WIDTH*i
+        ground.y = GROUND_HEIGHT-5
         land.append(ground)
 
     for k in range(0, 11):
         ground = Normal_Land()
-        ground.x =1100+40*k
-        ground.y = 35
+        ground.x =1100+GROUND_WIDTH*k
+        ground.y = GROUND_HEIGHT-5
         land.append(ground)
 
     for j in range(0,7):
         ground = Normal_Land()
-        ground.x = 1640+40*j
-        ground.y = 35
+        ground.x = 1640+GROUND_WIDTH*j
+        ground.y = GROUND_HEIGHT-5
         land.append(ground)
 
     for k in range(0,4):
         ground=Normal_Land()
-        ground.x=2000+40*k
-        ground.y=35
+        ground.x=2000+GROUND_WIDTH*k
+        ground.y=GROUND_HEIGHT-5
         land.append(ground)
     #for j in range(0,21):
      #   ground = Land2()
@@ -311,18 +322,18 @@ def draw(frame_time):
     for ob in obstacle:
         ob.draw()
 
-    #pipe.draw_bb()
-    #map2.draw_bb()
-    #cat.draw_bb()
-    #flag.draw_bb()
-    #for ground in wall:
-    #    ground.draw_bb()
-    #for ob in obstacle:
-    #    ob.draw_bb()
+    pipe.draw_bb()
+    map2.draw_bb()
+    cat.draw_bb()
+    flag.draw_bb()
+    for ground in wall:
+        ground.draw_bb()
+    for ob in obstacle:
+        ob.draw_bb()
     #for block in blocks:
     #    block.draw_bb()
-    #for thorn in thorns:
-    #    thorn.draw_bb()
+    for thorn in thorns:
+        thorn.draw_bb()
 
 
     pass
