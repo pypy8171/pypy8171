@@ -46,13 +46,21 @@ class Pistol_Fire:
         self.x += (self.dir * distance)
         self.y = self.cat.y
         if self.cat.pistolfire !=1:
-            self.x =self.cat.x+50
+            self.x =self.cat.x+30
 
         if self.cat.pistolfire == 1:
-            self.dir=4
+            if self.cat.dir==1 or self.cat.dir==0:
+                self.dir=4
+            elif self.cat.dir==-1 or self.cat.dir==0:
+                self.dir=-4
 
         if self.x>800:
-            self.x=self.cat.x
+            if  self.cat.pistolfire==0:
+                self.x=self.cat.x
+        if self.x<0:
+            if self.cat.pistolfire==0:
+                self.x=self.cat.x
+
 
         pass
 
