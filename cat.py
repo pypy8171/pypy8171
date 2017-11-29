@@ -21,7 +21,7 @@ class Cat:
 
     image=None
 
-    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,LEFT_JUMP,RIGHT_JUMP= 0, 1, 0, 1,2,3
+    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP= 0, 1, 0, 1,3
 
     def __init__(self):
         self.x, self.y = 100, 500
@@ -51,9 +51,6 @@ class Cat:
         self.bg=bg
     def set_map4(self,bg):
         self.bg=bg
-
-
-
 
     def update(self, frame_time):
         self.life_time += frame_time
@@ -118,11 +115,11 @@ class Cat:
 
 
     def stop_hard(self):
-        self.ystate = 1
+        self.ystate = 0
         if self.up ==-2:
             self.dir*=-1
             self.up=0
-            self.y +=5
+            self.y +=7
 
     def stop2(self):
         if self.dir==-1:
@@ -178,7 +175,7 @@ class Cat:
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
-            if self.state in (self.RIGHT_STAND, self.LEFT_STAND, self.RIGHT_RUN,self.RIGHT_JUMP,self.LEFT_JUMP):
+            if self.state in (self.RIGHT_STAND, self.LEFT_STAND, self.RIGHT_RUN,self.JUMP):
                 self.ystate = 0
                 self.state = self.LEFT_RUN
                 self.dir = -1
@@ -186,37 +183,37 @@ class Cat:
                 normal_stage.a=0
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RIGHT):
             self.ystate = 0
-            if self.state in (self.RIGHT_STAND, self.LEFT_STAND, self.LEFT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
+            if self.state in (self.RIGHT_STAND, self.LEFT_STAND, self.LEFT_RUN,self.JUMP):
                 self.state = self.RIGHT_RUN
                 self.dir = 1
                 self.index =1
                 normal_stage.a=0
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_LEFT):
             self.ystate = 0
-            if self.state in (self.LEFT_RUN,self.LEFT_JUMP):
+            if self.state in (self.LEFT_RUN,self.JUMP):
                 self.state = self.LEFT_STAND
                 self.dir = 0
                 normal_stage.a=0
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_RIGHT):
             self.ystate=0
-            if self.state in (self.RIGHT_RUN,self.RIGHT_JUMP):
+            if self.state in (self.RIGHT_RUN,self.JUMP):
                 self.state = self.RIGHT_STAND
                 self.dir = 0
                 normal_stage.a=0
         elif (event.type, event.key)==(SDL_KEYDOWN,SDLK_UP):
             self.ystate = 0
-            if self.state in(self.LEFT_STAND, self.LEFT_RUN):
-                self.state = self.LEFT_JUMP
-                self.up = 2
-                self.total_frame=0
-            elif self.state in (self.RIGHT_STAND, self.RIGHT_RUN):
-                self.state = self.RIGHT_JUMP
-                self.up = 2
-                self.total_frame = 0
+            if self.state in(self.LEFT_STAND, self.LEFT_RUN,self.RIGHT_RUN,self.RIGHT_STAND,self.JUMP):
+                if self.up < 1 and self.up > -1:
+                    self.state = self.JUMP
+                    self.up = 2
+                    self.total_frame=0
 
 
         elif (event.type, event.key)==(SDL_KEYDOWN,SDLK_a):
             self.pistolfire=1
+
+        elif (event.type, event.key)==(SDL_KEYUP,SDLK_a):
+            self.pistolfire=0
 
 
 

@@ -13,6 +13,8 @@ from easy_map import Easy_Map
 from pipe import Pipe1
 from easy_land import Easy_Land
 from fake_portal import Door
+from pistol_fire import Pistol_Fire
+
 #from pistol import Pistol
 
 
@@ -52,14 +54,14 @@ def create_land():
 
 
 def create_world():
-    global cat,map1, pipe,land, wall,door#, pistol
+    global cat,map1, pipe,land, wall,door, pistol
     door=Door()
     cat = Cat()
     map1 = Easy_Map()
     pipe = Pipe1()
     land=Easy_Land()
     wall = create_land()
-    #pistol = Pistol()
+    pistol = Pistol_Fire()
 
 
     for i in wall:
@@ -69,17 +71,18 @@ def create_world():
     pipe.set_map1(map1)
     land.set_map1(map1)
     door.set_map1(map1)
-    #pistol.set_map1(map1)
+    pistol.set_map1(map1)
+    pistol.set_cat(cat)
 
 def destroy_world():
-    global cat,map1,pipe,land,door#,pistol
+    global cat,map1,pipe,land,door,pistol
 
     del(door)
     del(cat)
     del(map1)
     del(pipe)
     del(land)
-    #del(pistol)
+    del(pistol)
 
 
 
@@ -141,7 +144,7 @@ def update(frame_time):
     cat.update(frame_time)
     map1.update(frame_time)
     #land.update(frame_time)
-    #pistol.update(frame_time)
+    pistol.update(frame_time)
 
 
     for ground in wall:
@@ -172,7 +175,7 @@ def draw(frame_time):
     pipe.draw()
     map1.draw()
     cat.draw()
-    #pistol.draw()
+    pistol.draw()
     land.draw()
     door.draw()
     for ground in wall:

@@ -15,6 +15,7 @@ from normal_obstacle import Obstacle2
 from fake_portal import Flag
 from normal_dieblock import Dieblock
 from thorn import Thorn
+from pistol_fire import Pistol_Fire
 from help_block import Helpblock
 
 
@@ -145,7 +146,7 @@ def create_land():
     return land
 
 def create_world():
-    global cat,map2, pipe, land,wall,obstacle, flag,blocks,thorns
+    global cat,map2, pipe, land,wall,obstacle, flag,blocks,thorns,pistol
 
     blocks = create_dieblock()
     thorns = create_diethorn()
@@ -156,6 +157,7 @@ def create_world():
     pipe = Pipe2()
     land = Normal_Land()
     wall = create_land()
+    pistol = Pistol_Fire()
 
     for i in wall:
         i.set_map2(map2)
@@ -170,11 +172,13 @@ def create_world():
     pipe.set_map2(map2)
     land.set_map2(map2)
     flag.set_map2(map2)
+    pistol.set_map2(map2)
+    pistol.set_cat(cat)
 
 
 
 def destroy_world():
-    global cat,map2,pipe,land,obstacle,flag,blocks,thorns
+    global cat,map2,pipe,land,obstacle,flag,blocks,thorns,pistol
 
 
     del(cat)
@@ -185,6 +189,7 @@ def destroy_world():
     del(flag)
     del(blocks)
     del(thorns)
+    del(pistol)
 
 
 
@@ -241,6 +246,7 @@ def update(frame_time):
     #global a
     cat.update(frame_time)
     map2.update(frame_time)
+    pistol.update(frame_time)
 
     for ground in wall:
         if collide(ground, cat):
@@ -260,7 +266,7 @@ def update(frame_time):
 
     # 죽었을때 다시 감추는거
     if cat.y>550:
-        Dieblock.image = load_image("die_block2.png")
+        Dieblock.image = load_image("die_block.png")
         Thorn.image = load_image("normal_tile.png")
 
 
@@ -293,6 +299,7 @@ def draw(frame_time):
     pipe.draw()
     map2.draw()
     cat.draw()
+    pistol.draw()
     land.draw()
     flag.draw()
     for block in blocks:
