@@ -10,7 +10,7 @@ class Pipe1:
     def __init__(self):
         self.x, self.y = 505,150
         if Pipe1.image ==None:
-            Pipe1.image = load_image('pause.png')
+            Pipe1.image = load_image('pipe.png')
 
     def set_map1(self, bg):
         self.bg = bg
@@ -40,7 +40,7 @@ class Pipe2:
     def __init__(self):
         self.x, self.y = 1760,150
         if Pipe2.image ==None:
-            Pipe2.image = load_image('pause.png')
+            Pipe2.image = load_image('pipe.png')
 
     def set_map1(self, bg):
         self.bg = bg
