@@ -17,7 +17,7 @@ from pistol_fire import Pistol_Fire
 
 #from pistol import Pistol
 
-# 540m 짜리맵
+# 54M 짜리맵
 name = "easy_stage"
 
 cat = None
@@ -27,17 +27,15 @@ land = None
 door=None
 #pistol=None
 
-PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 300 cm
-GROUND_WIDTH_METER = 12
-GROUND_HEIGHT_METER = 12
+PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+GROUND_WIDTH_METER = 1.2
+GROUND_HEIGHT_METER = 1.2
 
 GROUND_WIDTH = (GROUND_WIDTH_METER * PIXEL_PER_METER)
 GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
 
 def create_land():
-    PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 30 cm
-    Easy_Map_Size=10/3 # 10 pixel 3m
-    #ground 하나에 12M
+
 
     land = []
     for i in range(0, 22):

@@ -17,15 +17,15 @@ from thorn import Thorn2
 from fireball import Fire_Ball
 from pistol_fire import Pistol_Fire
 
-# 840M짜리맵
+# 84M짜리맵
 name = "hard_stage"
 
 cat = None
 map3 = None
 
-PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 300 cm
-GROUND_WIDTH_METER = 12
-GROUND_HEIGHT_METER = 12
+PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+GROUND_WIDTH_METER = 1.2
+GROUND_HEIGHT_METER = 1.2
 
 GROUND_WIDTH = (GROUND_WIDTH_METER * PIXEL_PER_METER)
 GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)

@@ -18,16 +18,16 @@ from thorn import Thorn
 from pistol_fire import Pistol_Fire
 from help_block import Helpblock
 
-#660M 짜리맵
+#66M 짜리맵
 name = "normal_stage"
 
 cat =None
 map2 = None
 pipe = None
 
-PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 300 cm
-GROUND_WIDTH_METER = 12
-GROUND_HEIGHT_METER = 12
+PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+GROUND_WIDTH_METER = 1.2
+GROUND_HEIGHT_METER = 1.2
 
 GROUND_WIDTH = (GROUND_WIDTH_METER * PIXEL_PER_METER)
 GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
