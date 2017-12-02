@@ -4,7 +4,7 @@ import cat
 import random
 import json
 
-
+#840M짜리
 class Hard_Land:
     image = None;
 
@@ -15,13 +15,13 @@ class Hard_Land:
         if Hard_Land.image ==None:
             Hard_Land.image = load_image('hard_tile.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
+    #def set_map1(self, bg):
+    #    self.bg = bg
 
-    def set_map2(self,bg):
-        self.bg=bg
+    #def set_map2(self,bg):
+    #    self.bg=bg
 
-    def set_map3(self,bg):
+    def set_hardbg(self,bg):
         self.bg =bg
 
     def update(self, frame_time):

@@ -4,9 +4,16 @@ import cat
 import random
 import json
 
-
+#540M짜리
 class Easy_Land:
-    PIXEL_PER_METER = (10.0 / 3)  # 10 pixel 300 cm
+
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    GROUND_WIDTH_METER  = 0.4
+    GROUND_HEIGHT_METER = 0.7
+
+    GROUND_WIDTH = (GROUND_WIDTH_METER*PIXEL_PER_METER)
+    GROUND_HEIGHT = (GROUND_HEIGHT_METER*PIXEL_PER_METER)
+
 
     image = None;
 
@@ -16,7 +23,7 @@ class Easy_Land:
         if Easy_Land.image ==None:
             Easy_Land.image = load_image('easy_ground.png')
 
-    def set_map1(self, bg):
+    def set_easybg(self, bg):
         self.bg = bg
 
     def set_map2(self,bg):

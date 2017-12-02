@@ -18,7 +18,7 @@ class Boss:
 
     image = None
 
-    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP= 1, 1, 1, 1,1
+    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP= 0, 1, 0, 1,1
 
     def __init__(self):
         self.x, self.y = 600, 120
@@ -32,17 +32,12 @@ class Boss:
         self.up = 0
         self.a=0
         self.updir=0
+        self.state = self.LEFT_STAND
 
         if Boss.image == None:
             Boss.image = load_image('boss_animation.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
-    def set_map2(self,bg):
-        self.bg=bg
-    def set_map3(self,bg):
-        self.bg=bg
-    def set_map4(self,bg):
+    def set_bossbg(self,bg):
         self.bg=bg
 
 
@@ -55,7 +50,7 @@ class Boss:
 
         self.life_time += frame_time
         distance = Boss.RUN_SPEED_PPS * frame_time
-        self.frame = int(self.total_frames+1) % 4
+        self.frame = int(self.total_frames+1) % 5
         self.total_frames += Boss.FRAMES_PER_ACTION * Boss.ACTION_PER_TIME * frame_time
         self.total_frame += Boss.FRAMES_PER_ACTION * Boss.ACTION_PER_TIME*frame_time
 
@@ -78,8 +73,10 @@ class Boss:
     def Boss_Run(self, cat):
         if self.x>cat:
             self.dir=-0.5
+            self.state = self.LEFT_RUN
         if self.x<cat:
             self.dir=0.5
+            self.state=self.RIGHT_RUN
         if self.up == -2:
             self.up = 0
 
@@ -88,14 +85,14 @@ class Boss:
     def draw(self):
         sx = self.x - self.bg.window_left
         sy = self.y - self.bg.window_bottom
-        self.image.clip_draw(self.frame*95,20,85,90, sx, sy)
+        self.image.clip_draw(self.frame*130,self.state*100,100,100, sx, sy)
 
     def remove(self):
         self.dir = 100
 
 
     def get_bb(self):
-        return self.x - 20-self.bg.window_left, self.y - 40-self.bg.window_bottom, self.x+25-self.bg.window_left, self.y+40-self.bg.window_bottom
+        return self.x - 10-self.bg.window_left, self.y - 40-self.bg.window_bottom, self.x-self.bg.window_left, self.y+20-self.bg.window_bottom
         pass
 
     def draw_bb(self):

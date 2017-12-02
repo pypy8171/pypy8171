@@ -37,7 +37,7 @@ class Pause:
     def draw(self):
         self.image.draw(  self.x1, self.y1)
 
-    def set_map1(self, bg):
+    def set_easybg(self, bg):
         self.bg = bg
     def set_map2(self,bg):
         self.bg=bg
@@ -102,11 +102,9 @@ def draw(frame_time):
     #title.draw()
     easy_stage.door.draw()
     easy_stage.pipe.draw()
-    easy_stage.map1.draw()
+    easy_stage.easybg.draw() # 순수 배경만
     for easy_stage.ground in easy_stage.wall:
         easy_stage.ground.draw()
-    #grass.draw 대신 main_state.draw_main_scene
-    #easy_stage.map1.image.draw(1550+easy_land.easy_land.x,easy_land.easy_land.y)
     easy_stage.cat.image.clip_draw(easy_stage.cat.frame * 100, easy_stage.cat.state*100, 100, 100, easy_stage.cat.x, easy_stage.cat.y)
 
     #normal_stage.cat.image.clip_draw(normal_stage.cat.frame * 100, normal_stage.cat.state * 100, 100, 100, normal_stage.cat.x,

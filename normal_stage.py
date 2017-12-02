@@ -14,7 +14,7 @@ from normal_land import Normal_Land
 from normal_obstacle import Obstacle2
 from fake_portal import Flag
 from normal_dieblock import Dieblock
-from thorn import Thorn
+from thorn import Normal_Thorn
 from pistol_fire import Pistol_Fire
 from help_block import Helpblock
 
@@ -22,7 +22,7 @@ from help_block import Helpblock
 name = "normal_stage"
 
 cat =None
-map2 = None
+normalbg = None
 pipe = None
 
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
@@ -35,19 +35,19 @@ GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
 def create_diethorn():
     thorns=[]
     for i0 in range(0,2):
-        thorn = Thorn()
+        thorn = Normal_Thorn()
         thorn.x = 100+GROUND_WIDTH*i0
         thorn.y = 5*GROUND_HEIGHT
         thorns.append(thorn)
 
     for i in range(0,1):
-        thorn = Thorn()
+        thorn = Normal_Thorn()
         thorn.x = 1185 +GROUND_WIDTH*i
         thorn.y = 4.5*GROUND_WIDTH
         thorns.append(thorn)
 
     for i2 in range(0,1):
-        thorn=Thorn()
+        thorn=Normal_Thorn()
         thorn.x = 980+GROUND_WIDTH*i2
         thorn.y=4*GROUND_HEIGHT
         thorns.append(thorn)
@@ -157,45 +157,45 @@ def create_land():
     return land
 
 def create_world():
-    global cat,map2, pipe, land,wall,obstacle, flag,blocks,thorns,pistol
+    global cat,normalbg, pipe, wall,obstacle, flag,blocks,thorns,pistol#,land
 
     blocks = create_dieblock()
     thorns = create_diethorn()
     flag = Flag()
     obstacle=create_obstacle()
     cat = Cat()
-    map2 = Normal_Map()
+    normalbg = Normal_Map()
     pipe = Pipe2()
-    land = Normal_Land()
+    #land = Normal_Land()
     wall = create_land()
     pistol = Pistol_Fire()
 
     for i in wall:
-        i.set_map2(map2)
+        i.set_normalbg(normalbg)
     for i in obstacle:
-        i.set_map2(map2)
+        i.set_normalbg(normalbg)
     for i in blocks:
-        i.set_map2(map2)
+        i.set_normalbg(normalbg)
     for i in thorns:
-        i.set_map2(map2)
-    map2.set_center_object(cat)
-    cat.set_map2(map2)
-    pipe.set_map2(map2)
-    land.set_map2(map2)
-    flag.set_map2(map2)
-    pistol.set_map2(map2)
+        i.set_normalbg(normalbg)
+    normalbg.set_center_object(cat)
+    cat.set_normalbg(normalbg)
+    pipe.set_normalbg(normalbg)
+    #land.set_normalbg(normalbg)
+    flag.set_normalbg(normalbg)
+    pistol.set_normalbg(normalbg)
     pistol.set_cat(cat)
 
 
 
 def destroy_world():
-    global cat,map2,pipe,land,obstacle,flag,blocks,thorns,pistol
+    global cat,normalbg,pipe,obstacle,flag,blocks,thorns,pistol#,land
 
 
     del(cat)
-    del(map2)
+    del(normalbg)
     del(pipe)
-    del(land)
+    #del(land)
     del(obstacle)
     del(flag)
     del(blocks)
@@ -229,6 +229,8 @@ def handle_events(frame_time):
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_h:
             game_framework.push_state(hard_stage)
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_p:
+            game_framework.push_state(pause_state)
         elif cat.x>2100:
             game_framework.change_state(hard_stage)
             #game_framework.change_state(boss_stage)
@@ -237,7 +239,7 @@ def handle_events(frame_time):
                 game_framework.quit()
             else:
                 cat.handle_event(event)
-                map2.handle_event(event)
+                normalbg.handle_event(event)
 
 
 def collide(a, b):
@@ -256,7 +258,7 @@ def collide(a, b):
 def update(frame_time):
     #global a
     cat.update(frame_time)
-    map2.update(frame_time)
+    normalbg.update(frame_time)
     pistol.update(frame_time)
 
     for ground in wall:
@@ -272,13 +274,13 @@ def update(frame_time):
 
     for thorn in thorns:
         if collide(thorn, cat):
-            Thorn.image = load_image("thorn.png")
+            Normal_Thorn.image = load_image("thorn.png")
             cat.die()
 
     # 죽었을때 다시 감추는거
     if cat.y>550:
         Dieblock.image = load_image("die_block.png")
-        Thorn.image = load_image("normal_tile.png")
+        Normal_Thorn.image = load_image("normal_tile.png")
 
 
 
@@ -296,22 +298,14 @@ def update(frame_time):
     if collide(flag, cat):
         cat.start()
 
-
-
-
-
-
-    #if collide(map2,cat):
-       # print("collision")
-
 def draw(frame_time):
     clear_canvas()
 
     pipe.draw()
-    map2.draw()
+    normalbg.draw()
     cat.draw()
     pistol.draw()
-    land.draw()
+    #land.draw()
     flag.draw()
     for block in blocks:
         block.draw()
@@ -323,7 +317,7 @@ def draw(frame_time):
         ob.draw()
 
     pipe.draw_bb()
-    map2.draw_bb()
+    normalbg.draw_bb()
     cat.draw_bb()
     flag.draw_bb()
     for ground in wall:

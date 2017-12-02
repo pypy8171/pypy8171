@@ -12,16 +12,8 @@ class Boss_Land:
         self.x, self.y = 0,0
         if Boss_Land.image ==None:
             Boss_Land.image = load_image('hard_tile.png')
-    def set_map1(self, bg):
-        self.bg = bg
 
-    def set_map2(self,bg):
-        self.bg=bg
-
-    def set_map3(self,bg):
-        self.bg =bg
-
-    def set_map4(self,bg):
+    def set_bossbg(self,bg):
         self.bg = bg
     def update(self, frame_time):
         pass

@@ -26,13 +26,13 @@ class Fire_Ball:
         if Fire_Ball.image ==None:
             Fire_Ball.image = load_image('fireball.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
+    #def set_map1(self, bg):
+    #    self.bg = bg
 
-    def set_map2(self,bg):
-        self.bg=bg
+    #def set_map2(self,bg):
+    #    self.bg=bg
 
-    def set_map3(self,bg):
+    def set_hardbg(self,bg):
         self.bg =bg
 
     def update(self, frame_time):

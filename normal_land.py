@@ -4,7 +4,7 @@ import cat
 import random
 import json
 
-
+#660M
 class Normal_Land:
     image = None;
 
@@ -13,14 +13,14 @@ class Normal_Land:
         if Normal_Land.image ==None:
             Normal_Land.image = load_image('normal_ground.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
+    #def set_map1(self, bg):
+    #    self.bg = bg
 
-    def set_map2(self,bg):
+    def set_normalbg(self,bg):
         self.bg=bg
 
-    def set_map3(self,bg):
-        self.bg =bg
+    #def set_map3(self,bg):
+    #    self.bg =bg
 
     def update(self, frame_time):
         pass

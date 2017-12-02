@@ -15,10 +15,10 @@ from boss_map import Boss_Map
 from boss import Boss
 
 
-name = "easy_stage"
+name = "boss_stage"
 
 cat = None
-map1 = None
+bossbg = None
 pipe = None
 land = None
 pistol=None
@@ -46,39 +46,35 @@ def create_land():
 
 
 def create_world():
-    global cat,map4,land, wall,door, pistol,boss
+    global cat,bossbg, wall,door, pistol,boss#,land
 
 
     boss = Boss()
     cat = Cat()
     pistol=Pistol_Fire()
-    map4=Boss_Map()
-    land=Boss_Land()
+    bossbg=Boss_Map()
+    #land=Boss_Land()
     wall = create_land()
 
 
 
     for i in wall:
-        i.set_map4(map4)
-    map4.set_center_object(cat)
-    cat.set_map4(map4)
-    land.set_map4(map4)
-    pistol.set_map4(map4)
-    boss.set_map4(map4)
+        i.set_bossbg(bossbg)
+    bossbg.set_center_object(cat)
+    cat.set_bossbg(bossbg)
+    #land.set_bossbg(bossbg)
+    pistol.set_bossbg(bossbg)
+    boss.set_bossbg(bossbg)
     pistol.set_cat(cat)
 
 def destroy_world():
-    global cat,map4,land,pistol
+    global cat,bossbg,land,pistol
 
 
     del(cat)
-    del(map4)
+    del(bossbg)
     del(land)
     del(pistol)
-
-
-
-
 
 def enter():
     game_framework.reset_time()
@@ -109,9 +105,8 @@ def handle_events(frame_time):
                 game_framework.quit()
             else:
                 cat.handle_event(event)
-                map4.handle_event(event)
+                bossbg.handle_event(event)
                 pistol.handle_event(event)
-                #land.handle_event(event)
 
 
 def collide(a, b):
@@ -129,8 +124,8 @@ def collide(a, b):
 def update(frame_time):
 
     cat.update(frame_time)
-    map4.update(frame_time)
-    land.update(frame_time)
+    bossbg.update(frame_time)
+    #land.update(frame_time)
     pistol.update(frame_time)
     boss.update(frame_time)
 
@@ -156,19 +151,18 @@ def draw(frame_time):
 
 
 
-    map4.draw()
+    bossbg.draw()
     pistol.draw()
     cat.draw()
-    land.draw()
+    #land.draw()
     for ground in wall:
         ground.draw()
     boss.draw()
 
-
-    map4.draw_bb()
+    bossbg.draw_bb()
     pistol.draw_bb()
     cat.draw_bb()
-    land.draw_bb()
+    #land.draw_bb()
     boss.draw_bb()
     for ground in wall:
         ground.draw_bb()

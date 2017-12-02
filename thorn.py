@@ -5,24 +5,21 @@ import random
 import json
 
 
-class Thorn:
+class Normal_Thorn:
     image = None;
 
     def __init__(self):
         self.x, self.y = 100 ,200
-        if Thorn.image ==None:
-            Thorn.image = load_image('normal_tile.png')
+        if Normal_Thorn.image ==None:
+            Normal_Thorn.image = load_image('normal_tile.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
-
-    def set_map2(self,bg):
+    def set_normalbg(self,bg):
         self.bg=bg
 
-    def set_map3(self,bg):
+    def set_hardbg(self,bg):
         self.bg =bg
 
-    def set_map4(self,bg):
+    def set_boss(self,bg):
         self.bg =bg
 
     def update(self, frame_time):
@@ -40,25 +37,25 @@ class Thorn:
         pass
 
 
-class Thorn2:
+class Hard_Thorn:
     image = None;
 
     def __init__(self):
         self.x, self.y = 100 ,200
-        if Thorn2.image ==None:
-            Thorn2.image = load_image('hard_tile.png')
+        if Hard_Thorn.image ==None:
+            Hard_Thorn.image = load_image('hard_tile.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
+    #def set_easybg(self, bg):
+    #    self.bg = bg
 
-    def set_map2(self,bg):
+    def set_normalbg(self,bg):
         self.bg=bg
 
-    def set_map3(self,bg):
+    def set_hardbg(self,bg):
         self.bg =bg
 
-    def set_map4(self,bg):
-        self.bg =bg
+    #def set_bossbg(self,bg):
+    #    self.bg =bg
 
     def update(self, frame_time):
         pass

@@ -13,7 +13,7 @@ from fake_portal import Fruit
 from hard_land import Hard_Land
 from normal_dieblock import Dieblock
 from help_block import Helpblock
-from thorn import Thorn2
+from thorn import Hard_Thorn
 from fireball import Fire_Ball
 from pistol_fire import Pistol_Fire
 
@@ -21,7 +21,7 @@ from pistol_fire import Pistol_Fire
 name = "hard_stage"
 
 cat = None
-map3 = None
+hardbg = None
 
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
 GROUND_WIDTH_METER = 1.2
@@ -40,20 +40,20 @@ def create_fireball():
 
     return fires
 
-def create_diethorn2():
-    thorns2=[]
+def create_diethorn():
+    thorns=[]
     for i0 in range(0,1):
-        thorn2 = Thorn2()
-        thorn2.x = 530+GROUND_WIDTH*i0
-        thorn2.y = 130
-        thorns2.append(thorn2)
+        thorn = Hard_Thorn()
+        thorn.x = 530+GROUND_WIDTH*i0
+        thorn.y = 130
+        thorns.append(thorn)
 
     for i0 in range(0,2):
-        thorn2 = Thorn2()
-        thorn2.x = 2320+GROUND_WIDTH*i0
-        thorn2.y = 53
-        thorns2.append(thorn2)
-    return thorns2
+        thorn = Hard_Thorn()
+        thorn.x = 2320+GROUND_WIDTH*i0
+        thorn.y = 53
+        thorns.append(thorn)
+    return thorns
 
 def create_dieblock():
     blocks=[]
@@ -161,47 +161,47 @@ def create_land():
     return land
 
 def create_world():
-    global cat,map3,fruit,wall,blocks,hblocks,thorns2,fires,pistol
+    global cat,hardbg,fruit,wall,blocks,hblocks,thorns,fires,pistol
 
     hblocks = create_helpblock()
     blocks = create_dieblock()
-    thorns2 = create_diethorn2()
+    thorns = create_diethorn()
     fires = create_fireball()
     wall = create_land()
     fruit=Fruit()
     cat = Cat()
-    map3 = Hard_Map()
+    hardbg = Hard_Map()
     pistol=Pistol_Fire()
 
 
     for i in wall:
-        i.set_map3(map3)
+        i.set_hardbg(hardbg)
     for i in blocks:
-        i.set_map3(map3)
+        i.set_hardbg(hardbg)
     for i in hblocks:
-        i.set_map3(map3)
-    for i in thorns2:
-        i.set_map3(map3)
+        i.set_hardbg(hardbg)
+    for i in thorns:
+        i.set_hardbg(hardbg)
     for i in fires:
-        i.set_map3(map3)
-    map3.set_center_object(cat)
-    cat.set_map3(map3)
-    fruit.set_map3(map3)
-    pistol.set_map3(map3)
+        i.set_hardbg(hardbg)
+    hardbg.set_center_object(cat)
+    cat.set_hardbg(hardbg)
+    fruit.set_hardbg(hardbg)
+    pistol.set_hardbg(hardbg)
     pistol.set_cat(cat)
 
 
 
 def destroy_world():
-    global cat,map3,fruit,blocks,hblocks,thorns2,fires,pistol
+    global cat,hardbg,fruit,blocks,hblocks,thorns,fires,pistol
 
     del(pistol)
     del(fires)
-    del(thorns2)
+    del(thorns)
     del(hblocks)
     del(blocks)
     del(cat)
-    del(map3)
+    del(hardbg)
     del(fruit)
 
 
@@ -237,7 +237,7 @@ def handle_events(frame_time):
                 game_framework.quit()
             else:
                 cat.handle_event(event)
-                map3.handle_event(event)
+                hardbg.handle_event(event)
 
 
 def collide(a, b):
@@ -255,7 +255,7 @@ def collide(a, b):
 
 def update(frame_time):
     cat.update(frame_time)
-    map3.update(frame_time)
+    hardbg.update(frame_time)
     pistol.update(frame_time)
     for fire in fires:
         fire.update(frame_time)
@@ -278,9 +278,9 @@ def update(frame_time):
             Dieblock.image = load_image("hard_tile.png")
             cat.block_stop()
 
-    for thorn2 in thorns2:
-        if collide(thorn2,cat):
-            Thorn2.image = load_image("hard_thorn.png")
+    for thorn in thorns:
+        if collide(thorn,cat):
+            Hard_Thorn.image = load_image("hard_thorn.png")
             cat.die()
 
     if collide(fire,cat):
@@ -291,7 +291,7 @@ def update(frame_time):
     if cat.y >550:
         Dieblock.image = load_image("die_block.png")
         Helpblock.image = load_image("die_block.png")
-        Thorn2.image = load_image("hard_tile.png")
+        Hard_Thorn.image = load_image("hard_tile.png")
 
     for hblock in hblocks:
         if collide(hblock, cat):
@@ -304,7 +304,7 @@ def update(frame_time):
 def draw(frame_time):
     clear_canvas()
 
-    map3.draw()
+    hardbg.draw()
     cat.draw()
     fruit.draw()
     pistol.draw()
@@ -314,13 +314,13 @@ def draw(frame_time):
         block.draw()
     for hblock in hblocks:
         hblock.draw()
-    for thorn2 in thorns2:
-        thorn2.draw()
+    for thorn in thorns:
+        thorn.draw()
     for fire in fires:
         fire.draw()
 
 
-    #map3.draw_bb()
+    #hardbg.draw_bb()
     #cat.draw_bb()
     #fruit.draw_bb()
     #for ground in wall:
@@ -329,7 +329,7 @@ def draw(frame_time):
     #    block.draw_bb()
     #for hblock in hblocks:
     #    hblock.draw_bb()
-    #for thorn2 in thorns2:
+    #for thorn2 in thorns:
     #    thorn2.draw_bb()
     pass
 

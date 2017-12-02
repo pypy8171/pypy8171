@@ -40,16 +40,16 @@ class Cat:
         self.state = self.RIGHT_STAND
         self.index=0
         self.pistolfire=0
-        if Cat.image == None:
-            Cat.image = load_image('cat_animation.png')
+      # if Cat.image==None: 인경우
+        Cat.image = load_image('cat_animation.png')
 
-    def set_map1(self, bg):
+    def set_easybg(self, bg):
         self.bg = bg
-    def set_map2(self,bg):
+    def set_normalbg(self,bg):
         self.bg=bg
-    def set_map3(self,bg):
+    def set_hardbg(self,bg):
         self.bg=bg
-    def set_map4(self,bg):
+    def set_bossbg(self,bg):
         self.bg=bg
 
     def update(self, frame_time):
@@ -73,6 +73,7 @@ class Cat:
 
         if self.y<-0:
             self.x ,self.y = 100,600
+
 
     def Cat_Dir(self):
         return self.x
@@ -101,11 +102,12 @@ class Cat:
     def stoppipe2(self):
         if self.up ==-2:
             self.up =0
+
         if self.x>1670 and self.x<1830 and self.y>65 and self.y<180:
             if self.dir==1:
-                self.x-=2
+                self.x-=3
             elif self.dir==-1:
-                self.x+=2
+                self.x+=3
 
     def stop(self):
         if self.up ==-2:
@@ -119,7 +121,7 @@ class Cat:
         if self.up ==-2:
             self.dir*=-1
             self.up=0
-            self.y +=7
+            self.y +=10
 
     def stop2(self):
         if self.dir==-1:

@@ -29,13 +29,13 @@ class Pistol_Fire:
         if Pistol_Fire.image == None:
             Pistol_Fire.image = load_image('pistol.png')
 
-    def set_map1(self, bg):
+    def set_easybg(self, bg):
         self.bg = bg
-    def set_map2(self,bg):
+    def set_normalbg(self,bg):
         self.bg=bg
-    def set_map3(self,bg):
+    def set_hardbg(self,bg):
         self.bg=bg
-    def set_map4(self,bg):
+    def set_bossbg(self,bg):
         self.bg=bg
     def set_cat(self,cat):
         self.cat=cat

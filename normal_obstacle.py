@@ -13,14 +13,14 @@ class Obstacle2:
         if Obstacle2.image ==None:
             Obstacle2.image = load_image('normal_tile.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
+    #def set_map1(self, bg):
+    #    self.bg = bg
 
-    def set_map2(self,bg):
+    def set_normalbg(self,bg):
         self.bg=bg
 
-    def set_map3(self,bg):
-        self.bg =bg
+    #def set_map3(self,bg):
+    #    self.bg =bg
 
     def update(self, frame_time):
         pass

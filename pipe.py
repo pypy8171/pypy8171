@@ -12,14 +12,11 @@ class Pipe1:
         if Pipe1.image ==None:
             Pipe1.image = load_image('pipe.png')
 
-    def set_map1(self, bg):
+    def set_easybg(self, bg):
         self.bg = bg
 
-    def set_map2(self,bg):
-        self.bg=bg
-
-    def set_map3(self,bg):
-        self.bg =bg
+    #def set_normalbg(self,bg):
+    #    self.bg=bg
 
     def update(self, frame_time):
         pass
@@ -42,14 +39,11 @@ class Pipe2:
         if Pipe2.image ==None:
             Pipe2.image = load_image('pipe.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
+    #def set_easybg(self, bg):
+    #    self.bg = bg
 
-    def set_map2(self,bg):
+    def set_normalbg(self,bg):
         self.bg=bg
-
-    def set_map3(self,bg):
-        self.bg =bg
 
     def update(self, frame_time):
         pass

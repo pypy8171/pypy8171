@@ -21,7 +21,7 @@ from pistol_fire import Pistol_Fire
 name = "easy_stage"
 
 cat = None
-map1 = None
+easybg = None
 pipe = None
 land = None
 door=None
@@ -56,34 +56,34 @@ def create_land():
 
 
 def create_world():
-    global cat,map1, pipe,land, wall,door, pistol
+    global cat,easybg, pipe,land, wall,door, pistol
     door=Door()
     cat = Cat()
-    map1 = Easy_Map()
+    easybg = Easy_Map()
     pipe = Pipe1()
-    land=Easy_Land()
+    #land=Easy_Land()
     wall = create_land()
     pistol = Pistol_Fire()
 
 
     for i in wall:
-        i.set_map1(map1)
-    map1.set_center_object(cat)
-    cat.set_map1(map1)
-    pipe.set_map1(map1)
-    land.set_map1(map1)
-    door.set_map1(map1)
-    pistol.set_map1(map1)
+        i.set_easybg(easybg)
+    easybg.set_center_object(cat)
+    cat.set_easybg(easybg)
+    pipe.set_easybg(easybg)
+    #land.set_easybg(easybg)
+    door.set_easybg(easybg)
+    pistol.set_easybg(easybg)
     pistol.set_cat(cat)
 
 def destroy_world():
-    global cat,map1,pipe,land,door,pistol
+    global cat,easybg,pipe,door,pistol#,land
 
     del(door)
     del(cat)
-    del(map1)
+    del(easybg)
     del(pipe)
-    del(land)
+    #del(land)
     del(pistol)
 
 def enter():
@@ -113,6 +113,8 @@ def handle_events(frame_time):
             game_framework.push_state(normal_stage)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_h:
             game_framework.push_state(hard_stage)
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_p:
+            game_framework.push_state(pause_state)
         elif cat.x>1700:
             game_framework.change_state(normal_stage)
         else:
@@ -120,7 +122,7 @@ def handle_events(frame_time):
                 game_framework.quit()
             else:
                 cat.handle_event(event)
-                map1.handle_event(event)
+                easybg.handle_event(event)
 
 
 def collide(a, b):
@@ -137,15 +139,13 @@ def collide(a, b):
 
 def update(frame_time):
     cat.update(frame_time)
-    map1.update(frame_time)
+    easybg.update(frame_time)
     pistol.update(frame_time)
 
 
     for ground in wall:
         if collide(ground,cat):
             cat.stop()
-        #elif collide(ground,pistol):
-            #pistol.stop()
 
     if collide(pipe,cat):
         print("collision")
@@ -155,31 +155,24 @@ def update(frame_time):
         print("collision")
         cat.die()
 
-    #if collide(land,cat):
-        #print("collision")
-        #cat.stop()
-
-
-    #if collide(map1,cat):
-       # print("collision")
 
 def draw(frame_time):
     clear_canvas()
 
     pipe.draw()
-    map1.draw()
+    easybg.draw()
     cat.draw()
     pistol.draw()
-    land.draw()
+    #land.draw()
     door.draw()
     for ground in wall:
         ground.draw()
 
     #pistol.draw_bb()
     #pipe.draw_bb()
-    #map1.draw_bb()
+    #easybg.draw_bb()
     #cat.draw_bb()
-    land.draw_bb()
+    #land.draw_bb()
     #door.draw_bb()
     #for ground in wall:
     #    ground.draw_bb()

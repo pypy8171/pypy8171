@@ -13,14 +13,14 @@ class Door:
         if Door.image ==None:
             Door.image = load_image('easy_portal.png')
 
-    def set_map1(self, bg):
+    def set_easybg(self, bg):
         self.bg = bg
 
-    def set_map2(self,bg):
-        self.bg=bg
+    #def set_map2(self,bg):
+    #    self.bg=bg
 
-    def set_map3(self,bg):
-        self.bg =bg
+    #def set_map3(self,bg):
+    #    self.bg =bg
 
     def update(self, frame_time):
         pass
@@ -44,14 +44,14 @@ class Flag:
         if Flag.image ==None:
             Flag.image = load_image('normal_portal.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
+    #def set_map1(self, bg):
+    #    self.bg = bg
 
-    def set_map2(self,bg):
+    def set_normalbg(self,bg):
         self.bg=bg
 
-    def set_map3(self,bg):
-        self.bg =bg
+    #def set_map3(self,bg):
+    #    self.bg =bg
 
     def update(self, frame_time):
         pass
@@ -75,13 +75,13 @@ class Fruit:
         if Fruit.image ==None:
             Fruit.image = load_image('hard_portal.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
+    #def set_map1(self, bg):
+    #    self.bg = bg
 
-    def set_map2(self,bg):
-        self.bg=bg
+    #def set_map2(self,bg):
+    #    self.bg=bg
 
-    def set_map3(self,bg):
+    def set_hardbg(self,bg):
         self.bg =bg
 
     def update(self, frame_time):

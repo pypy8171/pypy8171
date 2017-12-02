@@ -11,15 +11,15 @@ class Helpblock:
     def __init__(self):
         self.x, self.y = 0,30
         if Helpblock.image ==None:
-            Helpblock.image = load_image('die_block2.png')
+            Helpblock.image = load_image('die_block.png')
 
-    def set_map1(self, bg):
-        self.bg = bg
+    #def set_easybg(self, bg):
+    #    self.bg = bg
 
-    def set_map2(self,bg):
-        self.bg=bg
+    #def set_normalbg(self,bg):
+    #    self.bg=bg
 
-    def set_map3(self,bg):
+    def set_hardbg(self,bg):
         self.bg =bg
 
     def update(self, frame_time):
