@@ -4,7 +4,7 @@ import normal_stage
 from pico2d import *
 
 
-class Pistol_Fire:
+class Pistol_Auto:
     #pistol = []
 
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm
@@ -21,13 +21,12 @@ class Pistol_Fire:
 
 
     def __init__(self):
-        self.x, self.y = 100, 600
+        self.x, self.y = 600, 120
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.dir = 0
-        self.a=0
-        if Pistol_Fire.image == None:
-            Pistol_Fire.image = load_image('pistol.png')
+        if Pistol_Auto.image == None:
+            Pistol_Auto.image = load_image('pistol.png')
 
 
     def set_bossbg(self,bg):
@@ -38,36 +37,35 @@ class Pistol_Fire:
 
 
     def update(self, frame_time):
-        distance = Pistol_Fire.RUN_SPEED_PPS * frame_time
+        distance = Pistol_Auto.RUN_SPEED_PPS * frame_time
         self.x += (self.dir * distance)
         self.y = self.boss.y
-        if self.boss.pistolfire !=1:
-            self.x =self.boss.x+30
+        if self.boss.pistolfire !=2:
+            self.x =self.boss.x-10
 
-        if self.boss.pistolfire == 1:
-            if self.boss.dir==1 or self.boss.dir==0:
-                self.dir=4
-            elif self.boss.dir==-1 or self.boss.dir==0:
-                self.dir=-4
+        if self.boss.pistolfire == 2:
+            if self.boss.dir==0.5 :
+                self.dir=1
+            elif self.boss.dir==-0.5 :
+                self.dir=-1
 
-        if self.x>800:
-            if  self.boss.pistolfire==0:
-                self.x=self.boss.x
-        if self.x<0:
-            if self.boss.pistolfire==0:
-                self.x=self.boss.x
+        if self.boss.total_frames % 40>39:
+            self.x = self.boss.x
+
+        if self.x>800 or self.x<0:
+            self.x = self.boss.x
 
 
         pass
 
-    def stop(self):
-        self.cat.pistolfire==0
-        self.x=self.boss.x
+   # def stop(self):
+        #self.cat.pistolfire==0
+        #self.x=self.boss.x
 
     def draw(self):
         sx = self.x - self.bg.window_left
         sy = self.y - self.bg.window_bottom
-        if self.boss.pistolfire==1:
+        if self.boss.pistolfire==2:
             self.image.draw( sx, sy)
 
     def get_bb(self):

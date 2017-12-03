@@ -89,7 +89,7 @@ class Cat:
         sy = self.y - self.bg.window_bottom
         self.image.clip_draw(self.frame * 100, self.state * 100, 93, 100, sx, sy)
 
-    def stoppipe(self):
+    def stop_easypipe(self):
         if self.up ==-2:
             self.up =0
 
@@ -99,7 +99,7 @@ class Cat:
             elif self.dir==-1:
                 self.x+=3
 
-    def stoppipe2(self):
+    def stop_normalpipe(self):
         if self.up ==-2:
             self.up =0
 

@@ -10,6 +10,7 @@ import hard_stage
 
 from cat import Cat # import Boy class from boy.py
 from boss_land import Boss_Land
+from pistol_auto import Pistol_Auto
 from pistol_fire import Pistol_Fire
 from boss_map import Boss_Map
 from boss import Boss
@@ -21,8 +22,8 @@ cat = None
 bossbg = None
 pipe = None
 land = None
-pistol=None
-
+cat_pistol=None
+boss_pistol=None
 #24M짜리맵
 
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
@@ -46,12 +47,13 @@ def create_land():
 
 
 def create_world():
-    global cat,bossbg, wall,door, pistol,boss#,land
+    global cat,bossbg, wall,door, boss_pistol,cat_pistol,boss#,land
 
 
     boss = Boss()
     cat = Cat()
-    pistol=Pistol_Fire()
+    cat_pistol=Pistol_Fire()
+    boss_pistol=Pistol_Auto()
     bossbg=Boss_Map()
     #land=Boss_Land()
     wall = create_land()
@@ -63,18 +65,21 @@ def create_world():
     bossbg.set_center_object(cat)
     cat.set_bossbg(bossbg)
     #land.set_bossbg(bossbg)
-    pistol.set_bossbg(bossbg)
+    cat_pistol.set_bossbg(bossbg)
+    boss_pistol.set_bossbg(bossbg)
     boss.set_bossbg(bossbg)
-    pistol.set_cat(cat)
+    boss_pistol.set_boss(boss)
+    cat_pistol.set_cat(cat)
 
 def destroy_world():
-    global cat,bossbg,land,pistol
+    global cat,bossbg,land,boss_pistol,cat_pistol
 
 
     del(cat)
     del(bossbg)
     del(land)
-    del(pistol)
+    del(boss_pistol)
+    del(cat_pistol)
 
 def enter():
     game_framework.reset_time()
@@ -106,7 +111,7 @@ def handle_events(frame_time):
             else:
                 cat.handle_event(event)
                 bossbg.handle_event(event)
-                pistol.handle_event(event)
+                #pistol.handle_event(event)
 
 
 def collide(a, b):
@@ -126,16 +131,17 @@ def update(frame_time):
     cat.update(frame_time)
     bossbg.update(frame_time)
     #land.update(frame_time)
-    pistol.update(frame_time)
+    boss_pistol.update(frame_time)
+    cat_pistol.update(frame_time)
     boss.update(frame_time)
 
     for ground in wall:
         if collide(ground,boss):
             boss.Boss_Run(cat.Cat_Dir())
 
-    if collide(boss,pistol):
+    if collide(boss,cat_pistol):
         print("collistion")
-        pistol.stop()
+        cat_pistol.stop()
         boss.remove()
 
     for ground in wall:
@@ -152,7 +158,8 @@ def draw(frame_time):
 
 
     bossbg.draw()
-    pistol.draw()
+    cat_pistol.draw()
+    boss_pistol.draw()
     cat.draw()
     #land.draw()
     for ground in wall:
@@ -160,7 +167,8 @@ def draw(frame_time):
     boss.draw()
 
     bossbg.draw_bb()
-    pistol.draw_bb()
+    cat_pistol.draw_bb()
+    boss_pistol.draw_bb()
     cat.draw_bb()
     #land.draw_bb()
     boss.draw_bb()

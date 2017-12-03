@@ -25,7 +25,6 @@ class Pistol_Fire:
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.dir = 0
-        self.a=0
         if Pistol_Fire.image == None:
             Pistol_Fire.image = load_image('pistol.png')
 

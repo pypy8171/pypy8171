@@ -147,12 +147,6 @@ def create_land():
         ground.x=2000+GROUND_WIDTH*k
         ground.y=GROUND_HEIGHT-5
         land.append(ground)
-    #for j in range(0,21):
-     #   ground = Land2()
-      #  ground.x = 1000+ 40*j
-     #   ground.y = 40
-      #  land.append(ground)
-
 
     return land
 
@@ -202,13 +196,9 @@ def destroy_world():
     del(thorns)
     del(pistol)
 
-
-
-
 def enter():
     game_framework.reset_time()
     create_world()
-
 
 def exit():
     destroy_world()
@@ -254,21 +244,17 @@ def collide(a, b):
     return True
 
 
-#a=None
 def update(frame_time):
-    #global a
     cat.update(frame_time)
     normalbg.update(frame_time)
     pistol.update(frame_time)
 
     for ground in wall:
         if collide(ground, cat):
-            #print("collision")
             cat.stop()
 
     for block in blocks:
         if collide(block,cat):
-            #print("clollision")
             Dieblock.image = load_image("normal_tile.png")
             cat.block_stop()
 
@@ -283,17 +269,14 @@ def update(frame_time):
         Normal_Thorn.image = load_image("normal_tile.png")
 
 
-
-
     for ob in obstacle:
         if collide(ob,cat):
             print("collision")
             cat.normal_stop()
 
     if collide(pipe,cat):
-        #print("collision")
-        cat.stoppipe2()
-        #a=1
+        cat.stop_normalpipe()
+
 
     if collide(flag, cat):
         cat.start()

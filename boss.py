@@ -30,7 +30,7 @@ class Boss:
         self.total_frame=0
         self.dir = 0
         self.up = 0
-        self.a=0
+        self.pistolfire=2
         self.updir=0
         self.state = self.LEFT_STAND
 
@@ -43,11 +43,6 @@ class Boss:
 
 
     def update(self, frame_time):
-        #def clamp(minimum, x, maximum):
-        #    return max(minimum, min(x, maximum))
-        #def clamp(minimum,y,maximum):
-        #    return max(minimum,min(y,maximum))
-
         self.life_time += frame_time
         distance = Boss.RUN_SPEED_PPS * frame_time
         self.frame = int(self.total_frames+1) % 5
