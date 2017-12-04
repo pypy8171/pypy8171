@@ -20,6 +20,7 @@ class Cat:
     FRAMES_PER_ACTION = 8
 
     image=None
+    jump_sound=None
 
     LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP= 0, 1, 0, 1,3
 
@@ -42,7 +43,12 @@ class Cat:
         self.pistolfire=0
       # if Cat.image==None: 인경우
         Cat.image = load_image('cat_animation.png')
+        if Cat.jump_sound==None:
+            Cat.jump_sound=load_wav('Jump.wav')
+            Cat.jump_sound.set_volume(32)
 
+    def jump(self):
+        self.jump_sound.play()
     def set_easybg(self, bg):
         self.bg = bg
     def set_normalbg(self,bg):
@@ -59,6 +65,7 @@ class Cat:
         self.total_frame += Cat.FRAMES_PER_ACTION * Cat.ACTION_PER_TIME*frame_time
         self.frame = int(self.total_frames+1) % 5
         self.x += (self.dir * distance)
+
         if self.ystate ==0:
             self.y +=(self.up*distance)
 
@@ -209,6 +216,7 @@ class Cat:
                     self.state = self.JUMP
                     self.up = 2
                     self.total_frame=0
+                    self.jump()
 
 
         elif (event.type, event.key)==(SDL_KEYDOWN,SDLK_a):
