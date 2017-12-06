@@ -205,26 +205,26 @@ class Cat:
                 #normal_stage.a=0
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_LEFT):
             self.ystate = 0
-            if self.state in (self.LEFT_RUN,self.RIGHT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
+            if self.state in (self.LEFT_RUN,self.RIGHT_STAND,self.RIGHT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
                 self.state = self.LEFT_STAND
                 self.dir = 0
                 #normal_stage.a=0
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_RIGHT):
             self.ystate=0
-            if self.state in (self.RIGHT_RUN,self.LEFT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
+            if self.state in (self.RIGHT_RUN,self.LEFT_STAND,self.LEFT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
                 self.state = self.RIGHT_STAND
                 self.dir = 0
                 #normal_stage.a=0
         elif (event.type, event.key)==(SDL_KEYDOWN,SDLK_UP):
             self.ystate = 0
-            if self.state in(self.LEFT_STAND, self.LEFT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
+            if self.state in(self.LEFT_STAND, self.LEFT_RUN,self.LEFT_JUMP):
                 if self.up < 1 and self.up > -1:
                     self.state = self.LEFT_JUMP
                     self.up = 2
                     self.total_frame=0
                     self.jump()
 
-            elif self.state in(self.RIGHT_RUN,self.RIGHT_STAND,self.RIGHT_JUMP,self.LEFT_JUMP):
+            elif self.state in(self.RIGHT_RUN,self.RIGHT_STAND,self.RIGHT_JUMP):
                 if self.up < 1 and self.up > -1:
                     self.state =  self.RIGHT_JUMP
                     self.up = 2
