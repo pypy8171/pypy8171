@@ -21,8 +21,9 @@ class Cat:
 
     image=None
     jump_sound=None
+    pistol_sound=None
 
-    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP= 0, 1, 0, 1,3
+    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,LEFT_JUMP,RIGHT_JUMP= 0, 1, 0, 1,2,3
 
     def __init__(self):
         self.x, self.y = 100, 500
@@ -46,9 +47,14 @@ class Cat:
         if Cat.jump_sound==None:
             Cat.jump_sound=load_wav('Jump.wav')
             Cat.jump_sound.set_volume(32)
+        if Cat.pistol_sound==None:
+            Cat.pistol_sound=load_wav('pistol.wav')
+            Cat.pistol_sound.set_volume(32)
 
     def jump(self):
         self.jump_sound.play()
+    def pistol(self):
+        self.pistol_sound.play()
     def set_easybg(self, bg):
         self.bg = bg
     def set_normalbg(self,bg):
@@ -184,43 +190,51 @@ class Cat:
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
-            if self.state in (self.RIGHT_STAND, self.LEFT_STAND, self.RIGHT_RUN,self.JUMP):
+            if self.state in (self.RIGHT_STAND, self.LEFT_STAND, self.RIGHT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
                 self.ystate = 0
                 self.state = self.LEFT_RUN
                 self.dir = -1
                 self.index=-1
-                normal_stage.a=0
+                #normal_stage.a=0
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RIGHT):
             self.ystate = 0
-            if self.state in (self.RIGHT_STAND, self.LEFT_STAND, self.LEFT_RUN,self.JUMP):
+            if self.state in (self.RIGHT_STAND, self.LEFT_STAND, self.LEFT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
                 self.state = self.RIGHT_RUN
                 self.dir = 1
                 self.index =1
-                normal_stage.a=0
+                #normal_stage.a=0
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_LEFT):
             self.ystate = 0
-            if self.state in (self.LEFT_RUN,self.JUMP):
+            if self.state in (self.LEFT_RUN,self.RIGHT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
                 self.state = self.LEFT_STAND
                 self.dir = 0
-                normal_stage.a=0
+                #normal_stage.a=0
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_RIGHT):
             self.ystate=0
-            if self.state in (self.RIGHT_RUN,self.JUMP):
+            if self.state in (self.RIGHT_RUN,self.LEFT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
                 self.state = self.RIGHT_STAND
                 self.dir = 0
-                normal_stage.a=0
+                #normal_stage.a=0
         elif (event.type, event.key)==(SDL_KEYDOWN,SDLK_UP):
             self.ystate = 0
-            if self.state in(self.LEFT_STAND, self.LEFT_RUN,self.RIGHT_RUN,self.RIGHT_STAND,self.JUMP):
+            if self.state in(self.LEFT_STAND, self.LEFT_RUN,self.LEFT_JUMP,self.RIGHT_JUMP):
                 if self.up < 1 and self.up > -1:
-                    self.state = self.JUMP
+                    self.state = self.LEFT_JUMP
                     self.up = 2
                     self.total_frame=0
                     self.jump()
 
+            elif self.state in(self.RIGHT_RUN,self.RIGHT_STAND,self.RIGHT_JUMP,self.LEFT_JUMP):
+                if self.up < 1 and self.up > -1:
+                    self.state =  self.RIGHT_JUMP
+                    self.up = 2
+                    self.total_frame=0
+                    self.jump()
 
         elif (event.type, event.key)==(SDL_KEYDOWN,SDLK_a):
             self.pistolfire=1
+            self.pistol()
+
 
         elif (event.type, event.key)==(SDL_KEYUP,SDLK_a):
             self.pistolfire=0

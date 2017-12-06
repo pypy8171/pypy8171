@@ -144,12 +144,18 @@ def update(frame_time):
         cat_pistol.stop()
         boss.remove()
 
+    if collide(boss_pistol,cat):
+        cat.die()
+        boss_pistol.stop()
+
     for ground in wall:
         if collide(ground,cat):
             cat.stop()
 
     if collide(boss,cat):
         cat.die()
+
+
 
 
 def draw(frame_time):

@@ -17,6 +17,7 @@ class Boss:
     FRAMES_PER_ACTION = 8
 
     image = None
+    hit_sound = None
 
     LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP= 0, 1, 0, 1,1
 
@@ -36,9 +37,14 @@ class Boss:
 
         if Boss.image == None:
             Boss.image = load_image('boss_animation.png')
+        if Boss.hit_sound==None:
+            Boss.hit_sound=load_wav('hit.wav')
+            Boss.hit_sound.set_volume(32)
 
     def set_bossbg(self,bg):
         self.bg=bg
+    def hit(self):
+        self.hit_sound.play()
 
 
 
@@ -84,6 +90,7 @@ class Boss:
 
     def remove(self):
         self.dir = 100
+        self.hit()
 
 
     def get_bb(self):
