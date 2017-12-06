@@ -171,7 +171,7 @@ class Cat:
         self.up+=1
         Cat.image = load_image("blood.png")
         delay(0.1)
-        if self.up>1:
+        if self.jumpstate%2>1:
             self.start()
 
     def start(self):
