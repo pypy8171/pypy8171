@@ -34,6 +34,32 @@ GROUND_HEIGHT_METER = 1.2
 GROUND_WIDTH = (GROUND_WIDTH_METER * PIXEL_PER_METER)
 GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
 
+
+def create_team():
+
+    player_state_table = {
+        "LEFT_RUN" : Easy_Monster.LEFT_RUN,
+        "RIGHT_RUN" : Easy_Monster.RIGHT_RUN,
+    }
+
+    #team_data = json.loads(team_data_text)
+
+    team_data_file = open('easymonster_data.txt','r')
+    team_data = json.load(team_data_file)
+    team_data_file.close()
+
+    team = []
+    for name in team_data:
+        player = Easy_Monster()
+        player.name = name
+        player.x = team_data[name]['x']
+        player.y = team_data[name]['y']
+        player.state = player_state_table[team_data[name]['StartState']]
+        team.append(player)
+
+    return team
+
+
 def create_land():
 
     land = []
@@ -63,7 +89,7 @@ def create_world():
     #land=Easy_Land()
     wall = create_land()
     pistol = Pistol_Fire()
-    monster = Easy_Monster()
+    monster = create_team()
 
 
     for i in wall:
@@ -75,7 +101,8 @@ def create_world():
     door.set_easybg(easybg)
     pistol.set_easybg(easybg)
     pistol.set_cat(cat)
-    monster.set_easybg(easybg)
+    for monsters in monster:
+        monsters.set_easybg(easybg)
 
 def destroy_world():
     global cat,easybg,pipe,door,pistol,monster#,land
@@ -145,12 +172,17 @@ def update(frame_time):
     cat.update(frame_time)
     easybg.update(frame_time)
     pistol.update(frame_time)
-    monster.update(frame_time)
+    for monsters in monster:
+        monsters.update(frame_time)
+
 
 
     for ground in wall:
         if collide(ground,cat):
             cat.stop()
+    for monsters in monster:
+        if collide(monsters,cat):
+            cat.die()
 
     if collide(pipe,cat):
         print("collision")
@@ -170,10 +202,13 @@ def draw(frame_time):
     pistol.draw()
     #land.draw()
     door.draw()
-    monster.draw()
+    for monsters in monster:
+        monsters.draw()
     for ground in wall:
         ground.draw()
 
+    for monsters in monster:
+        monsters.draw_bb()
     #pistol.draw_bb()
     #pipe.draw_bb()
     #easybg.draw_bb()

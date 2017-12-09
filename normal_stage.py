@@ -16,6 +16,7 @@ from fake_portal import Flag
 from normal_dieblock import Dieblock
 from thorn import Normal_Thorn
 from pistol_fire import Pistol_Fire
+from monster import Easy_Monster
 from help_block import Helpblock
 
 #66M 짜리맵
@@ -31,6 +32,31 @@ GROUND_HEIGHT_METER = 1.2
 
 GROUND_WIDTH = (GROUND_WIDTH_METER * PIXEL_PER_METER)
 GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
+
+def create_team():
+
+    player_state_table = {
+        "LEFT_RUN" : Easy_Monster.LEFT_RUN,
+        "RIGHT_RUN" : Easy_Monster.RIGHT_RUN,
+    }
+
+    #team_data = json.loads(team_data_text)
+
+    team_data_file = open('normalmonster_data.txt','r')
+    team_data = json.load(team_data_file)
+    team_data_file.close()
+
+    team = []
+    for name in team_data:
+        player = Easy_Monster()
+        player.name = name
+        player.x = team_data[name]['x']
+        player.y = team_data[name]['y']
+        player.state = player_state_table[team_data[name]['StartState']]
+        team.append(player)
+
+    return team
+
 
 def create_diethorn():
     thorns=[]
@@ -151,7 +177,7 @@ def create_land():
     return land
 
 def create_world():
-    global cat,normalbg, pipe, wall,obstacle, flag,blocks,thorns,pistol#,land
+    global cat,normalbg, pipe, wall,obstacle, flag,blocks,thorns,pistol,monster#,land
 
     blocks = create_dieblock()
     thorns = create_diethorn()
@@ -163,6 +189,7 @@ def create_world():
     #land = Normal_Land()
     wall = create_land()
     pistol = Pistol_Fire()
+    monster = create_team()
 
     for i in wall:
         i.set_normalbg(normalbg)
@@ -171,6 +198,8 @@ def create_world():
     for i in blocks:
         i.set_normalbg(normalbg)
     for i in thorns:
+        i.set_normalbg(normalbg)
+    for i in monster:
         i.set_normalbg(normalbg)
     normalbg.set_center_object(cat)
     cat.set_normalbg(normalbg)
@@ -183,9 +212,9 @@ def create_world():
 
 
 def destroy_world():
-    global cat,normalbg,pipe,obstacle,flag,blocks,thorns,pistol#,land
+    global cat,normalbg,pipe,obstacle,flag,blocks,thorns,pistol,monster#,land
 
-
+    del(monster)
     del(cat)
     del(normalbg)
     del(pipe)
@@ -248,6 +277,8 @@ def update(frame_time):
     cat.update(frame_time)
     normalbg.update(frame_time)
     pistol.update(frame_time)
+    for monsters in monster:
+        monsters.update(frame_time)
 
     for ground in wall:
         if collide(ground, cat):
@@ -298,6 +329,9 @@ def draw(frame_time):
         ground.draw()
     for ob in obstacle:
         ob.draw()
+    for monsters in monster:
+        monsters.draw()
+
 
     pipe.draw_bb()
     normalbg.draw_bb()
@@ -311,6 +345,7 @@ def draw(frame_time):
     #    block.draw_bb()
     for thorn in thorns:
         thorn.draw_bb()
+
 
 
     pass

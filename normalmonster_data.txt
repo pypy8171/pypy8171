@@ -1,0 +1,4 @@
+{
+
+	"Normal_Monster1" : {"StartState":"LEFT_RUN", "x":200, "y":90}
+}

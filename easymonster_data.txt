@@ -1,0 +1,5 @@
+	{
+	"Easy_Monster1" : {"StartState":"RIGHT_RUN", "x":200, "y":100},
+	"Easy_Monster2" : {"StartState":"LEFT_RUN", "x":700, "y":100},
+	"Easy_Monster3" : {"StartState":"RIGHT_RUN", "x":1300, "y":100}
+	}

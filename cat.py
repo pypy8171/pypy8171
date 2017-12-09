@@ -168,10 +168,10 @@ class Cat:
 
     def die(self):
         self.dir=0
-        self.up+=1
+        self.up=1
         Cat.image = load_image("blood.png")
         delay(0.1)
-        if self.jumpstate%2>1:
+        if self.jumpstate%3>2:
             self.start()
 
     def start(self):
@@ -241,7 +241,7 @@ class Cat:
 
 
 
-
+#dddddddddddddddddddddddddddddddddddddddd
 
 
 

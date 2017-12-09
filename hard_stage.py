@@ -16,6 +16,7 @@ from help_block import Helpblock
 from thorn import Hard_Thorn
 from fireball import Fire_Ball
 from pistol_fire import Pistol_Fire
+from monster import Easy_Monster
 
 # 84M짜리맵
 name = "hard_stage"
@@ -29,6 +30,32 @@ GROUND_HEIGHT_METER = 1.2
 
 GROUND_WIDTH = (GROUND_WIDTH_METER * PIXEL_PER_METER)
 GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
+
+
+def create_team():
+
+    player_state_table = {
+        "LEFT_RUN" : Easy_Monster.LEFT_RUN,
+        "RIGHT_RUN" : Easy_Monster.RIGHT_RUN,
+    }
+
+    #team_data = json.loads(team_data_text)
+
+    team_data_file = open('hardmonster_data.txt','r')
+    team_data = json.load(team_data_file)
+    team_data_file.close()
+
+    team = []
+    for name in team_data:
+        player = Easy_Monster()
+        player.name = name
+        player.x = team_data[name]['x']
+        player.y = team_data[name]['y']
+        player.state = player_state_table[team_data[name]['StartState']]
+        team.append(player)
+
+    return team
+
 
 def create_fireball():
     fires = []
@@ -161,7 +188,7 @@ def create_land():
     return land
 
 def create_world():
-    global cat,hardbg,fruit,wall,blocks,hblocks,thorns,fires,pistol
+    global cat,hardbg,fruit,wall,blocks,hblocks,thorns,fires,pistol,monster
 
     hblocks = create_helpblock()
     blocks = create_dieblock()
@@ -172,6 +199,7 @@ def create_world():
     cat = Cat()
     hardbg = Hard_Map()
     pistol=Pistol_Fire()
+    monster=create_team()
 
 
     for i in wall:
@@ -184,6 +212,8 @@ def create_world():
         i.set_hardbg(hardbg)
     for i in fires:
         i.set_hardbg(hardbg)
+    for i in monster:
+        i.set_hardbg(hardbg)
     hardbg.set_center_object(cat)
     cat.set_hardbg(hardbg)
     fruit.set_hardbg(hardbg)
@@ -193,8 +223,9 @@ def create_world():
 
 
 def destroy_world():
-    global cat,hardbg,fruit,blocks,hblocks,thorns,fires,pistol
+    global cat,hardbg,fruit,blocks,hblocks,thorns,fires,pistol,monster
 
+    del(monster)
     del(pistol)
     del(fires)
     del(thorns)
@@ -257,6 +288,9 @@ def update(frame_time):
     cat.update(frame_time)
     hardbg.update(frame_time)
     pistol.update(frame_time)
+
+    for monsters in monster:
+        monsters.update(frame_time)
     for fire in fires:
         fire.update(frame_time)
 
@@ -318,6 +352,8 @@ def draw(frame_time):
         thorn.draw()
     for fire in fires:
         fire.draw()
+    for monsters in monster:
+        monsters.draw()
 
 
     #hardbg.draw_bb()
