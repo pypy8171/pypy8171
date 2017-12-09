@@ -1,10 +1,10 @@
 {
-    "Easy1" : {"StartState":"LEFT_STAND", "x":1500, "y":100},
-	"Easy2"    : {"StartState":"RIGHT_RUN", "x":1510, "y":300},
-	"Easy3"   : {"StartState":"LEFT_RUN", "x":1490, "y":200},
-	"Easy4"    : {"StartState":"RIGHT_STAND", "x":1450, "y":400},
-	"Easy5"    : {"StartState":"RIGHT_STAND", "x":1500, "y":500},
-	"Easy6"    : {"StartState":"RIGHT_STAND", "x":1500, "y":600}
+    "Easy_Monster1" : {"StartState":"LEFT_RUN", "x":100, "y":100},
+	"Easy_Monster2" : {"StartState":"RIGHT_RUN", "x":200, "y":100},
+	"Easy_Monster3" : {"StartState":"LEFT_RUN", "x":300, "y":100},
+	"Easy_Monster4" : {"StartState":"RIGHT_RUN", "x":400, "y":100},
+	"Easy_Monster5" : {"StartState":"LEFT_RUN", "x":500, "y":100},
+	"Easy_Monster6" : {"StartState":"LEFT_RUN","x":400,"y":100},
+	"Easy_Monster7" : {"StartState":"RIGHT_RUN","x":350,"y":100}
 
 }
-

@@ -14,7 +14,7 @@ from pipe import Pipe1
 from easy_land import Easy_Land
 from fake_portal import Door
 from pistol_fire import Pistol_Fire
-
+from monster import Easy_Monster
 #from pistol import Pistol
 
 # 54M 짜리맵
@@ -36,7 +36,6 @@ GROUND_HEIGHT = (GROUND_HEIGHT_METER * PIXEL_PER_METER)
 
 def create_land():
 
-
     land = []
     for i in range(0, 22):
         ground = Easy_Land()
@@ -56,7 +55,7 @@ def create_land():
 
 
 def create_world():
-    global cat,easybg, pipe,land, wall,door, pistol
+    global cat,easybg, pipe,land, wall,door, pistol,monster
     door=Door()
     cat = Cat()
     easybg = Easy_Map()
@@ -64,6 +63,7 @@ def create_world():
     #land=Easy_Land()
     wall = create_land()
     pistol = Pistol_Fire()
+    monster = Easy_Monster()
 
 
     for i in wall:
@@ -75,10 +75,12 @@ def create_world():
     door.set_easybg(easybg)
     pistol.set_easybg(easybg)
     pistol.set_cat(cat)
+    monster.set_easybg(easybg)
 
 def destroy_world():
-    global cat,easybg,pipe,door,pistol#,land
+    global cat,easybg,pipe,door,pistol,monster#,land
 
+    del(monster)
     del(door)
     del(cat)
     del(easybg)
@@ -117,6 +119,8 @@ def handle_events(frame_time):
             game_framework.push_state(pause_state)
         elif cat.x>1700:
             game_framework.change_state(normal_stage)
+
+
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
@@ -141,6 +145,7 @@ def update(frame_time):
     cat.update(frame_time)
     easybg.update(frame_time)
     pistol.update(frame_time)
+    monster.update(frame_time)
 
 
     for ground in wall:
@@ -149,7 +154,7 @@ def update(frame_time):
 
     if collide(pipe,cat):
         print("collision")
-        cat.stoppipe()
+        cat.stop_easypipe()
 
     if collide(door,cat):
         print("collision")
@@ -165,6 +170,7 @@ def draw(frame_time):
     pistol.draw()
     #land.draw()
     door.draw()
+    monster.draw()
     for ground in wall:
         ground.draw()
 

@@ -6,81 +6,76 @@ from pico2d import *
 
 running = None
 
-class Title:
-    def __init__(self):
-        self.image = load_image('easy_mode.png')
-        self.x = 0
-        self.y = 300
-    def update(self):
-        pass
+class Easy_Monster:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 10.0  # Km / Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-    def draw(self):
-        self.image.draw(1550+self.x, self.y)
+    TIME_PER_ACTION = 0.5
+    ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+    FRAMES_PER_ACTION = 8
 
-
-class Monster:
     image = None
 
-    LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND = 0, 1, 2, 3
-
-    def handle_left_run(self)   :
-        self.x -= 5
-        self.run_frames += 1
-        if self.x < 1500:
-            self.state = self.RIGHT_RUN
-            self.x = 1500
-        if self.run_frames == 10:
-            self.state = self.LEFT_STAND
-            self.stand_frames = 0
-
-    def handle_left_stand(self):
-        self.stand_frames += 1
-        if self.stand_frames == 5:
-            self.state = self.LEFT_RUN
-            self.run_frames = 0
-
-    def handle_right_run(self):
-        self.x += 5
-        self.run_frames += 1
-        if self.x > 700:
-            self.state = self.LEFT_RUN
-            self.x = 700
-        if self.run_frames == 10:
-            self.state = self.RIGHT_STAND
-            self.stand_frames = 0
-
-    def handle_right_stand(self):
-        self.stand_frames += 1
-        if self.stand_frames == 5:
-            self.state = self.RIGHT_RUN
-            self.run_frames = 0
-
-
-    handle_state = {
-                LEFT_RUN: handle_left_run,
-                RIGHT_RUN: handle_right_run,
-                LEFT_STAND: handle_left_stand,
-                RIGHT_STAND: handle_right_stand
-    }
-
-    def update(self):
-        self.frame = (self.frame+1)%3
-        self.handle_state[self.state](self)
-
+    LEFT_RUN, RIGHT_RUN = 0, 1
 
     def __init__(self):
-        self.x, self.y = random.randint(700,1500), 90
-        self.frame = random.randint(0, 3)
+        self.x, self.y = random.randint(100, 700), 100
+        self.frame = random.randint(0, 1)
+        self.frame = 0
+        self.life_time = 0.0
+        self.total_frames = 0.0
+        self.total_frame = 0
+        self.dir = 0
         self.run_frames = 0
         self.stand_frames = 0
         self.state = self.RIGHT_RUN
         self.name = 'noname'
-        if Monster.image == None:
-            Monster.image = load_image('run_animation.png')
+        if Easy_Monster.image == None:
+            Easy_Monster.image = load_image('monster.png')
+
+    def set_easybg(self, bg):
+        self.bg = bg
+
+    def handle_left_run(self):
+        self.dir = -1
+        self.state=self.RIGHT_RUN
+        if self.total_frames%50>45:
+            self.dir=1
+            self.state=self.LEFT_RUN
+
+
+    def handle_right_run(self):
+        self.dir = 1
+        self.state = self.LEFT_RUN
+        if self.total_frames % 100>95:
+            self.dir = -1
+            self.state = self.RIGHT_RUN
+
+
+    handle_state = {
+                LEFT_RUN: handle_left_run,
+                RIGHT_RUN: handle_right_run
+    }
+
+    def update(self,frame_time):
+        self.life_time += frame_time
+        distance = Easy_Monster.RUN_SPEED_PPS * frame_time
+        self.total_frames += Easy_Monster.FRAMES_PER_ACTION * Easy_Monster.ACTION_PER_TIME * frame_time
+        self.total_frame += Easy_Monster.FRAMES_PER_ACTION * Easy_Monster.ACTION_PER_TIME * frame_time
+        self.x += (self.dir * distance)
+        self.handle_state[self.state](self)
 
     def draw(self):
-        self.image.clip_draw(self.frame * 100, self.state * 100, 100, 100, self.x, self.y)
-        #self.image.draw(self.x,self.y)
+        self.image.clip_draw(0,self.state*40,40,40,self.x - self.bg.window_left, self.y - self.bg.window_bottom)
+
+    def get_bb(self):
+        return self.x-20-self.bg.window_left,self.y-20-self.bg.window_bottom,self.x+20-self.bg.window_left,self.y+20-self.bg.window_bottom
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
 
 def handle_events():
     global running
@@ -98,70 +93,23 @@ def handle_events():
 def create_team():
 
     player_state_table = {
-        "LEFT_RUN" : Monster.LEFT_RUN,
-        "RIGHT_RUN" : Monster.RIGHT_RUN,
-        "LEFT_STAND" : Monster.LEFT_STAND,
-        "RIGHT_STAND" : Monster.RIGHT_STAND
+        "LEFT_RUN" : Easy_Monster.LEFT_RUN,
+        "RIGHT_RUN" : Easy_Monster.RIGHT_RUN,
     }
 
     #team_data = json.loads(team_data_text)
 
-    monster_data_file = open('monster_data.txt','r')
-    monster_data = json.load(monster_data_file)
-    monster_data_file.close()
+    team_data_file = open('monster_data.txt','r')
+    team_data = json.load(team_data_file)
+    team_data_file.close()
 
-    monster = []
-    for name in monster_data:
-        monsters = Monster()
-        monsters.name = name
-        monsters.x = monster_data[name]['x']
-        monsters.y = monster_data[name]['y']
-        monsters.state = player_state_table[monster_data[name]['StartState']]
-        monster.append(monsters)
+    team = []
+    for name in team_data:
+        player = Easy_Monster()
+        player.name = name
+        player.x = team_data[name]['x']
+        player.y = team_data[name]['y']
+        player.state = player_state_table[team_data[name]['StartState']]
+        team.append(player)
 
-    return monster
-
-def enter():
-    global title, monster
-    monster = Monster()
-    title = Title()
-
-    pass
-
-
-def exit():
-    global title, monster
-    del(monster)
-    del(title)
-    pass
-
-
-def main():
-
-    open_canvas()
-
-    global moster
-    global running
-
-    monster = create_team()
-
-    title = Title()
-    running = True
-    while running:
-        handle_events()
-
-        for monsters in monster:
-            monsters.update()
-
-        clear_canvas()
-        title.draw()
-        for monsters in monster:
-            monsters.draw()
-        update_canvas()
-
-        delay(0.04)
-
-    close_canvas()
-
-if __name__ == '__main__':
-    main()
+    return team
