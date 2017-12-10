@@ -21,7 +21,7 @@ class Pistol_Auto:
 
 
     def __init__(self):
-        self.x, self.y = 600, 120
+        self.x, self.y = 750, 120
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.dir = 0
@@ -45,11 +45,11 @@ class Pistol_Auto:
 
         if self.boss.pistolfire == 2:
             if self.boss.dir==0.5 :
-                self.dir=0.5
+                self.dir=0.7
             elif self.boss.dir==-0.5 :
-                self.dir=-0.5
+                self.dir=-0.7
 
-        if self.boss.total_frames % 80>79:
+        if self.boss.total_frames % 100>99:
             self.x = self.boss.x
 
         if self.x>800 or self.x<0:

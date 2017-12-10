@@ -33,6 +33,7 @@ class Door:
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
+
     def handle_event(self,event):
         pass
 

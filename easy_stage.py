@@ -184,6 +184,7 @@ def update(frame_time):
         if collide(monsters,cat):
             cat.die()
 
+
     for monsters in monster:
         if collide(monsters,pistol):
             monsters.die()
@@ -198,7 +199,6 @@ def update(frame_time):
         cat.stop_easypipe()
 
     if collide(door,cat):
-        print("collision")
         cat.die()
 
 

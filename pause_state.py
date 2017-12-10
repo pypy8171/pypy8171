@@ -46,6 +46,9 @@ class Pause:
     def set_map4(self,bg):
         self.bg=bg
 
+    def set_cat(self,b):
+        self.cat = cat
+
 class Title:
     def __init__(self):
         self.image = load_image('easy_mode.png')

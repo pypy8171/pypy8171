@@ -1,4 +1,4 @@
 	{
-	"Hard_Monster1" : {"StartState":"LEFT_RUN", "x":200, "y":225},
-	"Hard_Monster2" : {"StartState":"LEFT_RUN", "x":700, "y":225}
+	"Hard_Monster1" : {"StartState":"LEFT_RUN", "x":200, "y":230},
+	"Hard_Monster2" : {"StartState":"LEFT_RUN", "x":750, "y":230}
 	}

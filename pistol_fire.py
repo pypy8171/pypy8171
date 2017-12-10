@@ -21,7 +21,7 @@ class Pistol_Fire:
 
 
     def __init__(self):
-        self.x, self.y = 100, 600
+        self.x, self.y = 100, 610
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.dir = 0
@@ -43,14 +43,14 @@ class Pistol_Fire:
     def update(self, frame_time):
         distance = Pistol_Fire.RUN_SPEED_PPS * frame_time
         self.x += (self.dir * distance)
-        self.y = self.cat.y
+        self.y = self.cat.y+10
         if self.cat.pistolfire !=1:
-            self.x =self.cat.x+30
+            self.x =self.cat.x
 
         if self.cat.pistolfire == 1:
-            if self.cat.dir==1 or self.cat.dir==0:
+            if self.cat.state==self.cat.RIGHT_STAND or self.cat.state==self.cat.RIGHT_RUN or self.cat.state==self.cat.RIGHT_JUMP:
                 self.dir=4
-            elif self.cat.dir==-1 or self.cat.dir==0:
+            elif self.cat.state==self.cat.LEFT_STAND or self.cat.state == self.cat.LEFT_RUN or self.cat.state == self.cat.LEFT_JUMP:
                 self.dir=-4
 
         if self.x>800:

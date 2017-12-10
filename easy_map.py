@@ -21,6 +21,7 @@ class Easy_Map:
     def set_center_object(self,cat):
         self.center_object=cat
 
+
     def draw(self):
         #self.image.draw(835,300)
     #835 에서 -110 까지 -> 835 ~ -910
@@ -36,6 +37,9 @@ class Easy_Map:
         self.window_bottom=clamp(0,
             int(self.center_object.y) - self.canvas_height//2,
             self.h - self.canvas_height)
+
+
+
 
     def get_bb(self):
         #return 0-self.window_left,0-self.window_bottom,870-self.window_left,70-self.window_bottom

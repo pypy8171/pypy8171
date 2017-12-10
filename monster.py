@@ -18,6 +18,7 @@ class Easy_Monster:
     FRAMES_PER_ACTION = 8
 
     image = None
+    die_sound=None
 
     LEFT_RUN, RIGHT_RUN = 0, 1
 
@@ -29,31 +30,42 @@ class Easy_Monster:
         self.total_frames = 0.0
         self.total_frame = 0
         self.dir = 0
+        self.up=0;
         self.run_frames = 0
         self.stand_frames = 0
+        self.distance=0
+        self.height=0;
         self.state = self.RIGHT_RUN
         self.name = 'noname'
         if Easy_Monster.image == None:
             Easy_Monster.image = load_image('monster.png')
+        if Easy_Monster.die_sound==None:
+            Easy_Monster.die_sound=load_wav('monsterdie.wav')
+            Easy_Monster.die_sound.set_volume(64)
 
+    def die(self):
+        self.die_sound.play()
     def set_easybg(self, bg):
         self.bg = bg
-
+    def set_normalbg(self, bg):
+        self.bg = bg
+    def set_hardbg(self, bg):
+        self.bg = bg
     def handle_left_run(self):
         self.dir = -1
-        self.state=self.RIGHT_RUN
-        if self.total_frames%50>45:
+        self.state=self.LEFT_RUN
+        if self.distance%30>29:
             self.dir=1
-            self.state=self.LEFT_RUN
+            self.state=self.RIGHT_RUN
+
 
 
     def handle_right_run(self):
         self.dir = 1
-        self.state = self.LEFT_RUN
-        if self.total_frames % 100>95:
+        self.state = self.RIGHT_RUN
+        if self.distance%30>29:
             self.dir = -1
-            self.state = self.RIGHT_RUN
-
+            self.state = self.LEFT_RUN
 
     handle_state = {
                 LEFT_RUN: handle_left_run,
@@ -66,13 +78,16 @@ class Easy_Monster:
         self.total_frames += Easy_Monster.FRAMES_PER_ACTION * Easy_Monster.ACTION_PER_TIME * frame_time
         self.total_frame += Easy_Monster.FRAMES_PER_ACTION * Easy_Monster.ACTION_PER_TIME * frame_time
         self.x += (self.dir * distance)
+        self.y +=(self.up *self.height)
+        self.height = self.y
+        self.distance = self.x
         self.handle_state[self.state](self)
 
     def draw(self):
         self.image.clip_draw(0,self.state*40,40,40,self.x - self.bg.window_left, self.y - self.bg.window_bottom)
 
     def get_bb(self):
-        return self.x-20-self.bg.window_left,self.y-20-self.bg.window_bottom,self.x+20-self.bg.window_left,self.y+20-self.bg.window_bottom
+        return self.x-10-self.bg.window_left,self.y-10-self.bg.window_bottom,self.x+10-self.bg.window_left,self.y+10-self.bg.window_bottom
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
@@ -90,26 +105,3 @@ def handle_events():
 
 # team FACTORY
 #"Asura2" :{"StartState":"RIGHT_RUN","x":random.randint(0,600),"y":random.randint(0,400)}
-def create_team():
-
-    player_state_table = {
-        "LEFT_RUN" : Easy_Monster.LEFT_RUN,
-        "RIGHT_RUN" : Easy_Monster.RIGHT_RUN,
-    }
-
-    #team_data = json.loads(team_data_text)
-
-    team_data_file = open('monster_data.txt','r')
-    team_data = json.load(team_data_file)
-    team_data_file.close()
-
-    team = []
-    for name in team_data:
-        player = Easy_Monster()
-        player.name = name
-        player.x = team_data[name]['x']
-        player.y = team_data[name]['y']
-        player.state = player_state_table[team_data[name]['StartState']]
-        team.append(player)
-
-    return team

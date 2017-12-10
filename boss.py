@@ -22,7 +22,7 @@ class Boss:
     LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND,JUMP= 0, 1, 0, 1,1
 
     def __init__(self):
-        self.x, self.y = 600, 120
+        self.x, self.y = 750, 120
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.life_time = 0.0
@@ -85,7 +85,7 @@ class Boss:
 
     def kill(self):
         if self.cat.y>500:
-            self.x, self.y = 600, 120
+            self.x, self.y = 750, 120
 
     def draw(self):
         sx = self.x - self.bg.window_left
@@ -93,7 +93,7 @@ class Boss:
         self.image.clip_draw(self.frame*130,self.state*100,100,100, sx, sy)
 
     def remove(self):
-        self.dir = 400
+        self.dir = 600
         self.hit()
 
 

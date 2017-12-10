@@ -149,7 +149,7 @@ def update(frame_time):
         boss.remove()
 
     if collide(boss_pistol,cat):
-        cat.die()
+        cat.die_boss()
         boss_pistol.stop()
         boss.kill()
 
