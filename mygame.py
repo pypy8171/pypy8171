@@ -11,5 +11,5 @@ import boss_stage
 
 
 open_canvas()
-game_framework.run(easy_stage)
+game_framework.run(title_state)
 close_canvas()

@@ -135,6 +135,8 @@ def update(frame_time):
     cat_pistol.update(frame_time)
     boss.update(frame_time)
 
+
+
     for ground in wall:
         if collide(ground,boss):
             boss.Boss_Run(cat.Cat_Dir())
@@ -172,14 +174,14 @@ def draw(frame_time):
         ground.draw()
     boss.draw()
 
-    bossbg.draw_bb()
-    cat_pistol.draw_bb()
-    boss_pistol.draw_bb()
-    cat.draw_bb()
+    #bossbg.draw_bb()
+    #cat_pistol.draw_bb()
+    #boss_pistol.draw_bb()
+    #cat.draw_bb()
     #land.draw_bb()
-    boss.draw_bb()
-    for ground in wall:
-        ground.draw_bb()
+    #boss.draw_bb()
+    #for ground in wall:
+    #    ground.draw_bb()
     pass
 
     update_canvas()

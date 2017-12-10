@@ -136,7 +136,7 @@ class Cat:
             self.up=0
             self.y +=10
 
-    def stop2(self):
+    def move_hard(self):
         if self.dir==-1:
             self.dir=1
             self.x+=5
@@ -157,8 +157,6 @@ class Cat:
             self.up=-12
         if self.dir==-1 and self.up==2:
             self.up=-12
-        #if self.dir==0 and self.up ==-2:
-            #self.up=0
 
     def help_stop(self):
         if self.up==-2:
@@ -168,11 +166,12 @@ class Cat:
 
     def die(self):
         self.dir=0
-        self.up=1
+        self.up=0
         Cat.image = load_image("blood.png")
         delay(0.1)
         if self.jumpstate%3>2:
             self.start()
+            self.jumpstate=0
 
     def start(self):
         Cat.image = load_image("cat_animation.png")

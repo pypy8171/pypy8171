@@ -280,6 +280,16 @@ def update(frame_time):
     for monsters in monster:
         monsters.update(frame_time)
 
+    for monsters in monster:
+        if collide(monsters,cat):
+            cat.die()
+
+    for monsters in monster:
+        if collide(monsters,pistol):
+            monsters.die()
+            monster.remove(monsters)
+            pistol.stop()
+
     for ground in wall:
         if collide(ground, cat):
             cat.stop()
@@ -333,18 +343,18 @@ def draw(frame_time):
         monsters.draw()
 
 
-    pipe.draw_bb()
-    normalbg.draw_bb()
-    cat.draw_bb()
-    flag.draw_bb()
-    for ground in wall:
-        ground.draw_bb()
-    for ob in obstacle:
-        ob.draw_bb()
+    #pipe.draw_bb()
+    #normalbg.draw_bb()
+    #cat.draw_bb()
+    #flag.draw_bb()
+    #for ground in wall:
+    #    ground.draw_bb()
+    #for ob in obstacle:
+    #    ob.draw_bb()
     #for block in blocks:
     #    block.draw_bb()
-    for thorn in thorns:
-        thorn.draw_bb()
+    #for thorn in thorns:
+    #    thorn.draw_bb()
 
 
 

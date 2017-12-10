@@ -184,6 +184,13 @@ def update(frame_time):
         if collide(monsters,cat):
             cat.die()
 
+    for monsters in monster:
+        if collide(monsters,pistol):
+            monsters.die()
+            monster.remove(monsters)
+            pistol.stop()
+
+
     if collide(pipe,cat):
         print("collision")
         cat.stop_easypipe()
@@ -207,8 +214,8 @@ def draw(frame_time):
     for ground in wall:
         ground.draw()
 
-    for monsters in monster:
-        monsters.draw_bb()
+    #for monsters in monster:
+    #    monsters.draw_bb()
     #pistol.draw_bb()
     #pipe.draw_bb()
     #easybg.draw_bb()
