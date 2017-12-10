@@ -6,29 +6,24 @@ from pico2d import *
 
 name = "TitleState"
 image = None
-title_font = None
-sub_font=None
+finish_font=None
 
 def enter():
     global image
-    global title_font
-    global sub_font
+    global finish_font
+    #global subfont
 
     #open_canvas()
     image=load_image('title.png')
 
-    title_font = load_font('ENCR10B.TTF', 60)  # 폰트파일 / 싸이즈  font.draw(x,y,'your text',(r,g,b))
-    sub_font = load_font('ENCR10B.TTF', 50)  # 폰트파일 / 싸이즈  font.draw(x,y,'your text',(r,g,b))
-
+    finish_font = load_font('ENCR10B.TTF', 60)  # 폰트파일 / 싸이즈  font.draw(x,y,'your text',(r,g,b))
 
 
 
 def exit():
-    global image, title_font,sub_font
+    global image, finish_font
     del(image)
-    del(title_font)
-    del(sub_font)
-   # close_canvas()
+    del(finish_font)
 
 
 def handle_events(frame_time):
@@ -49,9 +44,8 @@ def handle_events(frame_time):
 def draw(frame_time):
     clear_canvas()
     image.draw(400,300)
-    title_font.draw(220, 500, 'Cat Mario' , (250, 150, 50))
-    sub_font.draw(220, 280, 'Press Space', (0, 0, 0))
-    image.opacify(random.random())
+    finish_font.draw(230, 330, 'GAME CLEAR' , (0, 0, 0))
+
     update_canvas()
 
 
@@ -69,9 +63,5 @@ def pause():
 
 def resume():
     pass
-
-
-
-
 
 

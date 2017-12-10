@@ -289,6 +289,8 @@ def update(frame_time):
             monsters.die()
             monster.remove(monsters)
             pistol.stop()
+        if collide(pistol,pipe):
+            pistol.stop()
 
     for ground in wall:
         if collide(ground, cat):

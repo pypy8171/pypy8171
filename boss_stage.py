@@ -1,6 +1,7 @@
 from pico2d import *
 
 import game_framework
+import clear_state
 import pause_state
 
 import title_state
@@ -70,6 +71,7 @@ def create_world():
     boss.set_bossbg(bossbg)
     boss_pistol.set_boss(boss)
     cat_pistol.set_cat(cat)
+    boss.set_cat(cat)
 
 def destroy_world():
     global cat,bossbg,land,boss_pistol,cat_pistol
@@ -104,7 +106,7 @@ def handle_events(frame_time):
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif boss.x>800:
-            game_framework.push_state(title_state)
+            game_framework.push_state(clear_state)
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
@@ -149,6 +151,7 @@ def update(frame_time):
     if collide(boss_pistol,cat):
         cat.die()
         boss_pistol.stop()
+        boss.kill()
 
     for ground in wall:
         if collide(ground,cat):
@@ -156,6 +159,7 @@ def update(frame_time):
 
     if collide(boss,cat):
         cat.die()
+        boss.kill()
 
 
 

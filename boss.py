@@ -43,6 +43,8 @@ class Boss:
 
     def set_bossbg(self,bg):
         self.bg=bg
+    def set_cat(self,cat):
+        self.cat=cat
     def hit(self):
         self.hit_sound.play()
 
@@ -81,7 +83,9 @@ class Boss:
         if self.up == -2:
             self.up = 0
 
-
+    def kill(self):
+        if self.cat.y>500:
+            self.x, self.y = 600, 120
 
     def draw(self):
         sx = self.x - self.bg.window_left
@@ -89,7 +93,7 @@ class Boss:
         self.image.clip_draw(self.frame*130,self.state*100,100,100, sx, sy)
 
     def remove(self):
-        self.dir = 100
+        self.dir = 400
         self.hit()
 
 

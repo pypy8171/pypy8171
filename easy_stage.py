@@ -189,6 +189,8 @@ def update(frame_time):
             monsters.die()
             monster.remove(monsters)
             pistol.stop()
+        if collide(pipe,pistol):
+            pistol.stop()
 
 
     if collide(pipe,cat):

@@ -291,15 +291,27 @@ def update(frame_time):
 
     for monsters in monster:
         monsters.update(frame_time)
+
     for fire in fires:
         fire.update(frame_time)
 
-    if fire.y>600:
+    if fire.y>15*GROUND_HEIGHT:
         fire.y=0
 
+    for monsters in monster:
+        if collide(monsters,cat):
+            cat.die()
+
+    for monsters in monster:
+        if collide(monsters,pistol):
+            monsters.die()
+            monster.remove(monsters)
+            pistol.stop()
+
+
     for ground in wall:
-        if collide(ground, cat) :
-            cat.stop2()
+        if collide(ground, cat):
+            cat.move_hard()
         if collide(ground, cat) and ground.y<cat.y:
             cat.stop_hard()
 
@@ -308,7 +320,6 @@ def update(frame_time):
 
     for block in blocks:
         if collide(block,cat):
-            #print("clollision")
             Dieblock.image = load_image("hard_tile.png")
             cat.block_stop()
 

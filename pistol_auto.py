@@ -45,11 +45,11 @@ class Pistol_Auto:
 
         if self.boss.pistolfire == 2:
             if self.boss.dir==0.5 :
-                self.dir=1
+                self.dir=0.5
             elif self.boss.dir==-0.5 :
-                self.dir=-1
+                self.dir=-0.5
 
-        if self.boss.total_frames % 40>39:
+        if self.boss.total_frames % 80>79:
             self.x = self.boss.x
 
         if self.x>800 or self.x<0:
@@ -61,6 +61,10 @@ class Pistol_Auto:
    # def stop(self):
         #self.cat.pistolfire==0
         #self.x=self.boss.x
+
+    def stop(self):
+        self.boss.pistolfire==0
+        self.x=self.boss.x
 
     def draw(self):
         sx = self.x - self.bg.window_left
